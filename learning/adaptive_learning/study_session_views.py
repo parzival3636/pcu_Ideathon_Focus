@@ -148,7 +148,7 @@ class StudySessionViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['post'])
     def complete(self, request, pk=None):
-        """Complete session and generate Test 1 immediately"""
+        """Complete session INSTANTLY - generate test in background"""
         session = self.get_object()
 
         # Complete session
@@ -157,30 +157,91 @@ class StudySessionViewSet(viewsets.ModelViewSet):
         if 'error' in result:
             return Response(result, status=status.HTTP_400_BAD_REQUEST)
 
-        # Generate Test 1 IMMEDIATELY (synchronous)
-        try:
-            from .gemini_mcq_service import create_assessment_from_session
-            
-            print(f"[Session] Generating Test 1 for session {session.id}...")
-            assessment = create_assessment_from_session(
-                session_id=session.id,
-                user=session.user,
-                content=session.content
-            )
-            print(f"[Session] ✅ Test 1 (Assessment {assessment.id}) created successfully")
-            
-            result['test_id'] = assessment.id
-            result['test_ready'] = True
-            result['message'] = 'Session complete! Test 1 is ready.'
-            
-        except Exception as e:
-            print(f"[Session] ⚠️ Test 1 generation FAILED: {e}")
-            import traceback
-            traceback.print_exc()
-            result['test_ready'] = False
-            result['error'] = f'Test generation failed: {str(e)}'
+        # Generate test in BACKGROUND THREAD so response is instant
+        import threading
 
+        def _generate_test_background(session_id, user, content):
+            """Background worker: generate questions FAST. No re-extraction."""
+            import django
+            django.setup()
+            try:
+                from .gemini_mcq_service import create_assessment_from_session
+                from .models import StudySession
+
+                # Re-fetch objects in this thread
+                sess = StudySession.objects.get(id=session_id)
+                # Refresh content from DB to get latest transcript
+                if sess.content:
+                    cont = Content.objects.get(id=sess.content.id)
+                else:
+                    cont = None
+
+                has_transcript = cont and cont.transcript and len(cont.transcript.strip()) > 100
+                print(f"[BG Thread] Starting Test 1 for session {session_id}. Transcript: {'YES (' + str(len(cont.transcript)) + ' chars)' if has_transcript else 'NO - will use topic name'}", flush=True)
+
+                # Generate questions directly — NO re-extraction (that's what caused 10min hangs)
+                assessment = create_assessment_from_session(
+                    session_id=session_id,
+                    user=user,
+                    content=cont
+                )
+                print(f"[BG Thread] [OK] Test 1 (Assessment {assessment.id}) created with {assessment.total_questions} questions", flush=True)
+
+            except Exception as e:
+                print(f"[BG Thread] [FAIL] Test generation failed: {e}", flush=True)
+                try:
+                    sess.test_generation_failed = True
+                    sess.test_generation_message = str(e)
+                    sess.save()
+                except:
+                    pass
+                import traceback
+                traceback.print_exc()
+
+        # Spawn the background thread
+        thread = threading.Thread(
+            target=_generate_test_background,
+            args=(session.id, session.user, session.content),
+            daemon=True
+        )
+        thread.start()
+        print(f"[Session] Complete response sent INSTANTLY. Test generation running in background.", flush=True)
+
+        result['test_ready'] = False
+        result['generating'] = True
         return Response(result)
+
+    @action(detail=True, methods=['post'])
+    def retry_generation(self, request, pk=None):
+        """Retry test generation if it failed"""
+        session = self.get_object()
+        
+        # Reset failure status
+        session.test_generation_failed = False
+        session.test_generation_message = ""
+        session.save()
+        
+        # Spawn background thread (same as in complete)
+        import threading
+        def _generate_test_background(session_id, user, content):
+            import django
+            django.setup()
+            try:
+                from .gemini_mcq_service import create_assessment_from_session
+                from .models import StudySession
+                sess = StudySession.objects.get(id=session_id)
+                create_assessment_from_session(session_id=session_id, user=user, content=sess.content)
+            except Exception as e:
+                try:
+                    sess.test_generation_failed = True
+                    sess.test_generation_message = str(e)
+                    sess.save()
+                except: pass
+        
+        thread = threading.Thread(target=_generate_test_background, args=(session.id, session.user, session.content), daemon=True)
+        thread.start()
+        
+        return Response({'success': True, 'message': 'Retrying test generation...'})
 
     
     @action(detail=True, methods=['post'])

@@ -6,225 +6,225 @@
   "break_message": null,
   "questions": [
     {
-      "question": "What is the primary goal of the project described in the overview?",
+      "question": "What is the primary goal of the 3D Avatar Builder project?",
       "options": {
-        "A": "To create a new mobile game application.",
-        "B": "To build a professional, customizable 3D avatar builder.",
-        "C": "To develop a simple 2D drawing tool.",
-        "D": "To design a website for e-commerce products."
+        "A": "To create a 2D drawing application.",
+        "B": "To build a fully customizable 3D avatar builder.",
+        "C": "To develop a simple text editor.",
+        "D": "To design a new social media platform."
       },
       "answer": "B",
-      "explanation": "The project's goal is explicitly stated as 'Build a professional, customizable 3D avatar builder'."
+      "explanation": "The project overview states the main goal is to 'Create a professional, fully customizable 3D avatar builder'."
     },
     {
-      "question": "Which of the following is a key feature of the 3D avatar configurator?",
+      "question": "Which of these is mentioned as a design inspiration for the avatar builder?",
       "options": {
-        "A": "Writing and editing text documents.",
-        "B": "Managing a financial ledger.",
-        "C": "Choosing different assets for head and body parts.",
-        "D": "Processing large datasets for analysis."
-      },
-      "answer": "C",
-      "explanation": "One of the key features listed is 'Choosing different assets for head and body parts'."
-    },
-    {
-      "question": "Which existing avatar builder was mentioned as an inspiration for features?",
-      "options": {
-        "A": "Google Docs",
+        "A": "Microsoft Paint",
         "B": "Ready Player Me",
-        "C": "Microsoft Paint",
-        "D": "Adobe Photoshop"
+        "C": "Solitaire",
+        "D": "Calculator"
       },
       "answer": "B",
-      "explanation": "Ready Player Me was listed under 'Design Inspirations' for features."
+      "explanation": "Ready Player Me is explicitly listed under 'Design Inspirations' for the project."
     },
     {
-      "question": "What kind of style was mentioned as an inspiration for the characters in the avatar builder?",
+      "question": "Which feature is planned for the 3D Avatar Builder?",
       "options": {
-        "A": "Realistic and highly detailed",
-        "B": "Abstract and geometric",
-        "C": "Cute, small characters",
-        "D": "Grayscale and monochrome"
-      },
-      "answer": "C",
-      "explanation": "The 'Style' inspiration mentioned was 'Cute, small characters from Dribbble and Peps Avatar Builder'."
-    },
-    {
-      "question": "What technology stack is used for 3D rendering in this project?",
-      "options": {
-        "A": "Unity",
-        "B": "Three.js with React Three Fiber",
-        "C": "Blender",
-        "D": "Unreal Engine"
+        "A": "Writing stories for avatars.",
+        "B": "Choosing different assets for head and body parts.",
+        "C": "Playing mini-games with avatars.",
+        "D": "Creating music for avatars."
       },
       "answer": "B",
-      "explanation": "The 'Technical Stack' section specifies '3D Rendering: Three.js with React Three Fiber'."
+      "explanation": "'Choosing between different assets for head and body parts' is a key feature to implement."
     },
     {
-      "question": "Which framework/library is used for building the User Interface (UI)?",
+      "question": "Which technology is used for 3D rendering in this project?",
       "options": {
-        "A": "Bootstrap",
-        "B": "Material UI",
-        "C": "Tailwind CSS",
-        "D": "jQuery UI"
+        "A": "Photoshop",
+        "B": "Microsoft Word",
+        "C": "3.js with React Three Fiber (r3f)",
+        "D": "Google Docs"
       },
       "answer": "C",
-      "explanation": "The 'Technical Stack' section states 'UI (User Interface): Tailwind CSS'."
+      "explanation": "The 'Technical Stack' section clearly states '3D Rendering: 3.js with React Three Fiber (r3f)'."
     },
     {
-      "question": "What library is used for state management in the project?",
+      "question": "What is used for UI (User Interface) development in this project?",
       "options": {
-        "A": "Redux",
-        "B": "MobX",
+        "A": "Microsoft Excel",
+        "B": "Tailwind CSS",
+        "C": "Notepad",
+        "D": "Paint 3D"
+      },
+      "answer": "B",
+      "explanation": "'UI Development: Tailwind CSS' is specified in the Technical Stack."
+    },
+    {
+      "question": "Which tool is chosen for state management in the avatar builder?",
+      "options": {
+        "A": "Google Chrome",
+        "B": "Adobe Acrobat",
         "C": "Zustand",
-        "D": "Vuex"
+        "D": "VLC Media Player"
       },
       "answer": "C",
-      "explanation": "Under 'Technical Stack', 'State Management: Zustand' is clearly listed."
+      "explanation": "'State Management: Zustand' is listed in the Technical Stack for the project."
     },
     {
-      "question": "Which technology is chosen for the backend to store and manage avatar data?",
+      "question": "What technology is used for the backend to store and manage avatar data?",
       "options": {
-        "A": "MongoDB",
-        "B": "Firebase",
-        "C": "Pocketbase",
-        "D": "MySQL"
+        "A": "PocketBase",
+        "B": "Microsoft PowerPoint",
+        "C": "Discord",
+        "D": "Spotify"
       },
-      "answer": "C",
-      "explanation": "The 'Technical Stack' includes 'Backend: Pocketbase (for storing and managing avatar data)'."
+      "answer": "A",
+      "explanation": "'Backend: PocketBase (for storing and managing avatar data)' is part of the Technical Stack."
     },
     {
-      "question": "What command-line tool is used to create the initial React application?",
+      "question": "What command do you use to start a new React/Vite project in the terminal?",
       "options": {
-        "A": "`create-react-app`",
+        "A": "`git clone`",
         "B": "`yarn create vite`",
-        "C": "`npm install react`",
-        "D": "`npx create-next-app`"
+        "C": "`npm install`",
+        "D": "`yarn dev`"
       },
       "answer": "B",
-      "explanation": "The 'React Application Setup (with Vite)' section mentions 'Use Vite CLI (`yarn create vite` or `npm create vite@latest`)'."
+      "explanation": "Step 1 of 'Project Setup' instructs to 'run `yarn create vite`' to initialize a React/Vite project."
     },
     {
-      "question": "Which programming language was chosen for simplicity during the React app setup?",
+      "question": "After running `yarn create vite`, what framework should be selected for this project?",
       "options": {
-        "A": "TypeScript",
-        "B": "Python",
-        "C": "JavaScript",
-        "D": "Ruby"
+        "A": "Angular",
+        "B": "Vue",
+        "C": "React",
+        "D": "Svelte"
       },
       "answer": "C",
-      "explanation": "Under 'Configuration' for React app setup, it states 'Choose `JavaScript` for simplicity'."
+      "explanation": "Step 1 of 'Project Setup' states to 'Select `react` as the framework' during project initialization."
     },
     {
-      "question": "Which command initializes Tailwind CSS and creates `tailwind.config.js` and `postcss.config.js`?",
+      "question": "What command installs all necessary dependencies after creating a new Vite project?",
       "options": {
-        "A": "`yarn add tailwindcss`",
-        "B": "`npm start tailwind`",
-        "C": "`npx tailwindcss init -p`",
-        "D": "`tailwind create-config`"
-      },
-      "answer": "C",
-      "explanation": "The 'Initialize Tailwind' step explicitly uses the command `npx tailwindcss init -p`."
-    },
-    {
-      "question": "Which file needs to be updated to include content paths for Tailwind CSS to scan?",
-      "options": {
-        "A": "`index.html`",
-        "B": "`App.jsx`",
-        "C": "`package.json`",
-        "D": "`tailwind.config.js`"
-      },
-      "answer": "D",
-      "explanation": "The setup includes 'Configure `tailwind.config.js`' to add content paths."
-    },
-    {
-      "question": "What directives should be added to the main CSS file to integrate Tailwind CSS?",
-      "options": {
-        "A": "`import 'tailwindcss';`",
-        "B": "`@tailwind base; @tailwind components; @tailwind utilities;`",
-        "C": "`link rel='stylesheet' href='tailwind.css'`",
-        "D": "`use TailwindCSS;`"
+        "A": "`yarn start`",
+        "B": "`yarn` (or `npm install`)",
+        "C": "`yarn build`",
+        "D": "`yarn eject`"
       },
       "answer": "B",
-      "explanation": "The 'Integrate into CSS' step requires adding `@tailwind base; @tailwind components; @tailwind utilities;`."
+      "explanation": "Step 1 of 'Project Setup' says 'Install dependencies: `yarn` (or `npm install`).'"
     },
     {
-      "question": "What is the primary container component used for 3D rendering in React Three Fiber?",
+      "question": "What is the first step to integrate Tailwind CSS into the project?",
       "options": {
-        "A": "`<Scene>`",
+        "A": "Run `yarn dev`.",
+        "B": "Install Tailwind CSS and its related dependencies.",
+        "C": "Create a new GitHub repository.",
+        "D": "Add a `<Canvas>` component."
+      },
+      "answer": "B",
+      "explanation": "Step 2, 'Integrate Tailwind CSS', begins with 'Install dependencies: `yarn add --dev tailwindcss postcss autoprefixer`'."
+    },
+    {
+      "question": "Which file needs to be configured with paths to your component files after initializing Tailwind CSS?",
+      "options": {
+        "A": "`package.json`",
+        "B": "`index.html`",
+        "C": "`tailwind.config.js`",
+        "D": "`App.jsx`"
+      },
+      "answer": "C",
+      "explanation": "Step 2 mentions 'Configure `tailwind.config.js`: In the `content` array, add paths to your component files'."
+    },
+    {
+      "question": "Where do you add the `@tailwind` directives (like `@tailwind base;`) to include Tailwind CSS styles?",
+      "options": {
+        "A": "In `App.jsx`",
+        "B": "In `index.css`",
+        "C": "In `package.json`",
+        "D": "In `tailwind.config.js`"
+      },
+      "answer": "B",
+      "explanation": "Step 2 states, 'Add Tailwind directives to `index.css`'."
+    },
+    {
+      "question": "Which component from `@react-three/fiber` is essential for rendering any 3D content?",
+      "options": {
+        "A": "`<button>`",
         "B": "`<Canvas>`",
-        "C": "`<Viewport>`",
-        "D": "`<Renderer>`"
+        "C": "`<p>`",
+        "D": "`<div>`"
       },
       "answer": "B",
-      "explanation": "The 'Add 3D Scene Components' section states '`<Canvas>`: The primary container for 3D rendering'."
+      "explanation": "Step 3, 'Setup Three.js with React Three Fiber', says, 'In `App.jsx`, add a `<Canvas>` component for rendering 3D content'."
     },
     {
-      "question": "Which utility library provides useful React components like `<OrbitControls>` for React Three Fiber?",
+      "question": "What library provides useful helper components like `OrbitControls` for camera manipulation?",
       "options": {
-        "A": "`react-three-tools`",
+        "A": "`react-router-dom`",
         "B": "`@react-three/drei`",
-        "C": "`three-utilities`",
-        "D": "`react-orbit-controls`"
+        "C": "`axios`",
+        "D": "`lodash`"
       },
       "answer": "B",
-      "explanation": "`@react-three/drei` is described as the 'Utility Library' that 'provides useful React components for R3F'."
+      "explanation": "Step 3 mentions installing `@react-three/drei` for helper components, including `OrbitControls`."
     },
     {
-      "question": "What component from `@react-three/drei` allows the user to rotate the camera around the 3D scene?",
+      "question": "How can you set the background color for the 3D canvas in `App.jsx`?",
       "options": {
-        "A": "`<CameraMover>`",
-        "B": "`<SceneRotator>`",
-        "C": "`<OrbitControls>`",
-        "D": "`<ViewportControls>`"
+        "A": "By using a standard CSS `background-color` property on the `<Canvas>` tag.",
+        "B": "By adding a `<color attach=\"background\" args={['#101010']} />` inside the `<Canvas>` component.",
+        "C": "By changing the `body` background color in `index.html`.",
+        "D": "It's not possible to set a background color."
+      },
+      "answer": "B",
+      "explanation": "Step 3, under 'Styling Canvas', shows an example: `<Canvas ...> <color attach=\"background\" args={['#101010']} /> ... </Canvas>`."
+    },
+    {
+      "question": "What is the very first step to start using Git for version control in your local project folder?",
+      "options": {
+        "A": "`git push`",
+        "B": "`git init`",
+        "C": "`git commit`",
+        "D": "`git clone`"
+      },
+      "answer": "B",
+      "explanation": "Step 4, 'Version Control with GitHub', says, 'Initialize local Git repository: `git init`'."
+    },
+    {
+      "question": "What Git command is used to add all current files to the staging area before committing?",
+      "options": {
+        "A": "`git remove`",
+        "B": "`git branch`",
+        "C": "`git add .`",
+        "D": "`git status`"
       },
       "answer": "C",
-      "explanation": "Under 'Add 3D Scene Components', it mentions 'Camera Controls: `<OrbitControls>` from `@react-three/drei` to allow camera rotation'."
+      "explanation": "Step 4, 'Version Control with GitHub', states 'Add all files: `git add .`'."
     },
     {
-      "question": "What system is used for version control in this project?",
+      "question": "When deploying a Vite React application, what is the default output directory for the built files?",
       "options": {
-        "A": "SVN",
-        "B": "Mercurial",
-        "C": "Git",
-        "D": "Perforce"
-      },
-      "answer": "C",
-      "explanation": "The section 'Version Control (GitHub)' begins with 'Initialize Git: `git init`'."
-    },
-    {
-      "question": "After adding files (`git add .`), what command is used to save the changes to the project's history?",
-      "options": {
-        "A": "`git save`",
-        "B": "`git push`",
-        "C": "`git commit -m \"initial commit\"`",
-        "D": "`git store`"
-      },
-      "answer": "C",
-      "explanation": "The 'Version Control (GitHub)' section lists 'Commit Changes: `git commit -m \"initial commit\"`'."
-    },
-    {
-      "question": "What is the default output directory for the production build created by Vite?",
-      "options": {
-        "A": "`build`",
-        "B": "`public`",
+        "A": "`public`",
+        "B": "`src`",
         "C": "`dist`",
-        "D": "`output`"
+        "D": "`node_modules`"
       },
       "answer": "C",
-      "explanation": "Under 'Build Settings' for deployment, it specifies 'Output Directory: `dist` (this is where Vite outputs the production build)'."
+      "explanation": "Step 5, 'Project Deployment', under 'Configure deployment settings', specifies 'Output Directory: `dist` (default for Vite builds)'."
     },
     {
-      "question": "What happens automatically when changes are pushed to the selected branch after setting up deployment?",
+      "question": "What happens automatically when you push changes to the configured branch in a CI/CD pipeline for deployment?",
       "options": {
-        "A": "The project repository is deleted.",
+        "A": "Nothing, you have to manually rebuild.",
         "B": "A new build and deployment are triggered.",
-        "C": "The server automatically shuts down.",
-        "D": "A new development environment is created."
+        "C": "The project files are deleted.",
+        "D": "The development server starts locally."
       },
       "answer": "B",
-      "explanation": "The 'Automatic Redeployment' point states: 'Any changes pushed to the selected branch will automatically trigger a new build and deployment'."
+      "explanation": "Step 5, 'Project Deployment', concludes with: 'Any changes pushed to the configured branch will automatically trigger a new build and deployment'."
     }
   ],
-  "extracted_content": "Here's an extraction of key concepts, definitions, facts, processes, and examples from the transcript:\n\n## Project Overview: 3D Avatar Configurator\n\n*   **Goal:** Build a professional, customizable 3D avatar builder for use in various projects.\n*   **Key Features:**\n    *   Choosing different assets for head and body parts.\n    *   Picking colors for skin and hair.\n    *   Switching clothes and accessories.\n    *   Generating a final, lightweight version of the 3D model.\n*   **Design Inspirations:**\n    *   **Features:** Ready Player Me, The Sims, Animal Crossing.\n    *   **Style:** Cute, small characters from Dribbble and Peps Avatar Builder.\n*   **Assets:** Reusable assets are available from Kos (Peps Avatar Builder). The tutorial will cover preparing assets for the setup.\n\n## Technical Stack\n\n*   **3D Rendering:** Three.js with React Three Fiber\n*   **UI (User Interface):** Tailwind CSS\n*   **State Management:** Zustand\n*   **Backend:** Pocketbase (for storing and managing avatar data)\n\n## Project Setup Process\n\n### 1. React Application Setup (with Vite)\n\n*   **Create App:** Use Vite CLI (`yarn create vite` or `npm create vite@latest`).\n*   **Configuration:**\n    *   Select `react` as the framework.\n    *   Choose `JavaScript` for simplicity.\n*   **Initial Steps:**\n    *   Open the newly created project folder.\n    *   Install dependencies: `yarn` (or `npm install`).\n    *   Run development server: `yarn dev` (or `npm run dev`).\n\n### 2. Tailwind CSS Setup\n\n*   **Install Dependencies:**\n    *   `tailwindcss`\n    *   `postcss`\n    *   `autoprefixer`\n    *   *Command Example:* `yarn add --dev tailwindcss postcss autoprefixer`\n*   **Initialize Tailwind:**\n    *   `npx tailwindcss init -p` (creates `tailwind.config.js` and `postcss.config.js`).\n*   **Configure `tailwind.config.js`:**\n    *   Add content paths to include all relevant React files (e.g., `\"./index.html\", \"./src/**/*.{js,ts,jsx,tsx}\"`).\n*   **Integrate into CSS:**\n    *   Add Tailwind directives to your main CSS file (e.g., `index.css`):\n        ```css\n        @tailwind base;\n        @tailwind components;\n        @tailwind utilities;\n        ```\n*   **Cleanup:** Remove default CSS files (e.g., `App.css`) and template code from `App.jsx`.\n*   **Verification:** Apply Tailwind classes (e.g., `font-bold`, `underline`) to check functionality.\n*   **Recommended VS Code Extension:** Tailwind CSS IntelliSense.\n\n### 3. 3D Rendering Setup (with Three.js & React Three Fiber)\n\n*   **Install Core Packages:**\n    *   `three`\n    *   `@types/three`\n    *   `@react-three/fiber`\n    *   *Command Example:* `yarn add three @types/three @react-three/fiber`\n*   **Install Utility Library:**\n    *   `@react-three/drei` (provides useful React components for R3F).\n    *   *Command Example:* `yarn add @react-three/drei`\n*   **Add 3D Scene Components (in `App.jsx`):**\n    *   `<Canvas>`: The primary container for 3D rendering.\n    *   Camera Configuration: Set initial camera position (e.g., `camera={{ position: [3, 3, 3] }}`).\n    *   Basic 3D Object: A `<mesh>` containing a `<boxGeometry>` and `<meshNormalMaterial>`.\n    *   Camera Controls: `<OrbitControls>` from `@react-three/drei` to allow camera rotation.\n*   **Canvas Styling:**\n    *   Set `width: 100vw` and `height: 100vh` on the root container/body in CSS.\n    *   Remove default body margins.\n    *   Set a background color for the canvas using `<color attach=\"background\" args={['#darkColor']} />`.\n\n### 4. Version Control (GitHub)\n\n*   **Initialize Git:** `git init`\n*   **Add Files:** `git add .` (`.gitignore` from Vite typically excludes `node_modules`).\n*   **Commit Changes:** `git commit -m \"initial commit\"`\n*   **Connect to GitHub:**\n    *   Create a new repository on GitHub.\n    *   Add remote: `git remote add origin <repository_url>`\n    *   Set main branch: `git branch -M main`\n    *   Push: `git push -u origin main`\n\n### 5. Project Deployment (General Steps)\n\n*   **Platform:** Use a platform like LSO (or Vercel, Netlify, etc.).\n*   **Connect Repository:** Link your GitHub account and select the project repository.\n*   **Deployment Options:** Choose server specifications (VM, CPU, RAM, storage) and region.\n*   **Branch Selection:** Specify which branch (e.g., `main`) triggers automatic deployments on push.\n*   **Build Settings:**\n    *   **Install Command:** `yarn install` (or `npm install`).\n    *   **Build Command:** `yarn build` (or `npm run build`).\n    *   **Output Directory:** `dist` (this is where Vite outputs the production build).\n*   **CI/CD Pipeline:** Create a pipeline for continuous integration and deployment.\n*   **Automatic Redeployment:** Any changes pushed to the selected branch will automatically trigger a new build and deployment.\n\n## Upcoming Content\n\n*   Setting up a database with Pocketbase.\n*   Fetching assets directly into the application."
+  "extracted_content": "Here's an extraction of the key educational content:\n\n**Project Overview: 3D Avatar Builder**\n\n*   **Goal:** Create a professional, fully customizable 3D avatar builder.\n*   **Ultimate Aim:** Produce good-looking, animated avatars for use in other projects/tutorials.\n*   **Design Inspirations:** Ready Player Me, The Sims, Animal Crossing, cute small characters from Dribbble and peps Avatar builder.\n*   **Key Features to Implement:**\n    *   Choosing between different assets for head and body parts.\n    *   Picking colors for skin and hair.\n    *   Switching clothes and accessories.\n    *   Generating a final, lightweight version of the 3D model.\n*   **Asset Information:** Assets from this project can be freely reused. Concepts are adaptable for preparing custom assets.\n\n**Technical Stack**\n\n*   **3D Rendering:** 3.js with React Three Fiber (r3f)\n*   **UI Development:** Tailwind CSS\n*   **State Management:** Zustand\n*   **Backend:** PocketBase (for storing and managing avatar data)\n\n**Project Setup - Step-by-Step**\n\n1.  **Initialize React/Vite Project:**\n    *   Open terminal and run `yarn create vite` (or `npm create vite@latest`).\n    *   Enter project name (e.g., `r3f-ultimate-character-configurator`).\n    *   Select `react` as the framework.\n    *   Choose `JavaScript` (or TypeScript if preferred).\n    *   Open the created folder in your IDE.\n    *   Install dependencies: `yarn` (or `npm install`).\n    *   Run development server: `yarn dev` (or `npm run dev`).\n\n2.  **Integrate Tailwind CSS:**\n    *   Install dependencies: `yarn add --dev tailwindcss postcss autoprefixer` (or `npm install -D tailwindcss postcss autoprefixer`).\n    *   Initialize Tailwind CSS: `npx tailwindcss init -p`. This creates `tailwind.config.js` and `postcss.config.js`.\n    *   Configure `tailwind.config.js`: In the `content` array, add paths to your component files (e.g., `[\"./index.html\", \"./src/**/*.{js,ts,jsx,tsx}\"]`).\n    *   Add Tailwind directives to `index.css`:\n        ```css\n        @tailwind base;\n        @tailwind components;\n        @tailwind utilities;\n        ```\n    *   Clean up `App.jsx`: Remove default content and `App.css` import.\n    *   Verify Tailwind: Add a simple HTML element with Tailwind classes (e.g., `<p className=\"font-bold underline\">Hello World</p>`) to `App.jsx`.\n    *   **Recommended Extension:** Install \"Tailwind CSS IntelliSense\" for VS Code for class auto-completion and documentation on hover.\n\n3.  **Setup Three.js with React Three Fiber:**\n    *   Install core 3D libraries: `yarn add three @types/three @react-three/fiber` (or `npm install three @types/three @react-three/fiber`).\n    *   Install helper library: `yarn add @react-three/drei` (or `npm install @react-three/drei`).\n    *   In `App.jsx`, add a `<Canvas>` component for rendering 3D content.\n    *   Set camera position: `<Canvas camera={{ position: [3, 3, 3] }}>`.\n    *   Add a basic 3D object (e.g., a cube):\n        ```jsx\n        <mesh>\n          <boxGeometry args={[0.5, 0.5, 0.5]} />\n          <meshNormalMaterial />\n        </mesh>\n        ```\n    *   Add camera controls: `<OrbitControls />` from `@react-three/drei`.\n    *   **Styling Canvas:**\n        *   In `index.css`, set `html, body, #root { width: 100%; height: 100%; margin: 0; }`.\n        *   Set background color for the canvas: `<Canvas gl={{ antialias: true }} camera={{ position: [3, 3, 3] }}> <color attach=\"background\" args={['#101010']} /> ... </Canvas>`.\n    *   **ESLint Note (Troubleshooting/Removal):** If encountering `eslint` errors like \"unknown property,\" a quick fix can be to remove `eslint` related dependencies from `package.json`, delete `node_modules`, and reinstall dependencies (`yarn` or `npm install`).\n\n4.  **Version Control with GitHub:**\n    *   Create a new repository on GitHub (e.g., `r3f-ultimate-character-configurator`).\n    *   Initialize local Git repository: `git init`.\n    *   Add all files: `git add .` (Vite projects include a `.gitignore` to exclude `node_modules`).\n    *   Commit changes: `git commit -m \"initial commit\"`.\n    *   Set remote origin and push:\n        ```bash\n        git branch -M main\n        git remote add origin https://github.com/your-username/r3f-ultimate-character-configurator.git\n        git push -u origin main\n        ```\n\n5.  **Project Deployment (General Steps):**\n    *   Choose a deployment platform.\n    *   Connect your GitHub account.\n    *   Select the repository to deploy.\n    *   Configure deployment settings:\n        *   **Branch:** `main` (or desired deployment branch).\n        *   **Application Type:** `Static Website` (for typical React apps).\n        *   **Install Command:** `yarn install` (or `npm install`).\n        *   **Build Command:** `yarn build` (or `npm run build`).\n        *   **Output Directory:** `dist` (default for Vite builds).\n    *   Create a Continuous Integration/Continuous Deployment (CI/CD) pipeline.\n    *   Any changes pushed to the configured branch will automatically trigger a new build and deployment.\n\n**Upcoming Content:**\n\n*   Setting up a database with PocketBase.\n*   Fetching assets directly into the application."
 }

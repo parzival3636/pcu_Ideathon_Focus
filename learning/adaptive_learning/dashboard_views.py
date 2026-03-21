@@ -110,7 +110,7 @@ class DashboardViewSet(viewsets.ViewSet):
                     'generating': False,
                 }
             elif session.is_completed:
-                # Session completed but assessment not created yet (still generating)
+                # Session completed but assessment not created yet (still generating or failed)
                 test_status = {
                     'exists': False,
                     'assessment_id': None,
@@ -119,7 +119,9 @@ class DashboardViewSet(viewsets.ViewSet):
                     'expires_at': session.test_available_until.isoformat() if session.test_available_until else None,
                     'expired': False,
                     'test_number': None,
-                    'generating': True,
+                    'generating': not session.test_generation_failed,
+                    'failed': session.test_generation_failed,
+                    'error_message': session.test_generation_message
                 }
             else:
                 test_status = {

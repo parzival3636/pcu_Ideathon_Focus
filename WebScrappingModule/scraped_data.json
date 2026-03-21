@@ -1,109 +1,103 @@
 {
-  "topic": "english balbharati",
-  "articles": [
+  "topic": "React Hooks",
+  "tutorials": [
     {
-      "url": "https://books.ebalbharati.in/pdfs/1203010498.pdf",
-      "title": "Information Technology - Ebalbharti - eBalbharati",
-      "source": "google"
-    },
-    {
-      "url": "https://www.shaalaa.com/question-bank-solutions/write-an-html-code-to-provide-hyperlink-to-https-wwww3schoolscom_229624",
-      "title": "Write an HTML code to provide hyperlink to https://www. ...",
-      "source": "google"
-    },
-    {
-      "url": "https://www.geeksforgeeks.org/gfg-academy/best-schools-in-gurgaon/",
-      "title": "25 Best Schools in Gurgaon (Haryana) for Admissions ...",
-      "source": "google"
-    },
-    {
-      "url": "https://www.quora.com/I-dont-know-anything-about-programming-and-I-would-like-to-learn-it-Where-should-I-start-and-what-are-some-free-online-courses-for-learning-programming",
-      "title": "I don't know anything about programming and I would like ...",
-      "source": "google"
-    },
-    {
-      "url": "https://www.justdial.com/Thane/Tutorials-in-Mumbra/nct-10502492/page-9",
-      "title": "Top Tutorials in Mumbra - Thane",
-      "source": "google"
-    },
-    {
-      "url": "https://ebooks.ebalbharati.in/pdfs/1103000662.pdf",
-      "title": "1103000662.pdf",
-      "source": "google"
-    },
-    {
-      "url": "https://cdn1.byjus.com/wp-content/uploads/2022/07/MSBSHSE-Class-12-Information-Technology-Commerce-Textbook.pdf",
-      "title": "Information Technology (Commerce)",
-      "source": "google"
-    },
-    {
-      "url": "https://www.scribd.com/document/621405270/Information-Technology",
-      "title": "Information Technology | PDF | Html Element",
-      "source": "google"
-    },
-    {
-      "url": "https://in.linkedin.com/in/aryanj06",
-      "title": "Aryan Jha - Computer Science student at SRMIST, Chennai",
-      "source": "google"
-    },
-    {
-      "url": "https://metbhujbalknowledgecity.ac.in/MET%20DATA/IOE/MCA/FY_Curriculum_MCA_under_Engineering(2020%20Pattern)(2%20Years)9_6_21_16.06.2021.pdf",
-      "title": "Curriculum for First Year Master of Computer Applications ( ...",
-      "source": "google"
+      "url": "https://www.geeksforgeeks.org/react-hooks/",
+      "title": "GeeksforGeeks React Hooks",
+      "source": "geeksforgeeks"
     }
   ],
   "playlists": [
     {
-      "url": "https://www.youtube.com/watch?v=LDtm6KX7oGY",
-      "title": "34 videos",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=dGaW2-eE8tI",
-      "title": "Lesson 2. Aesop's fables || English balbharti || Maharashtra State Board || student point academy \u00b7 38:25",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/playlist?list=PLrjz9l3RpcjJRoX2nZat7VqKvpg_K6Xqy",
-      "title": "View full playlist",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=pdn9CLCuxis",
-      "title": "27 videos",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=qqFcfDruekM",
-      "title": "3.8 Alia falls sick Class 1st English New Syllabus | Grade One Balbharati English MH Board \u00b7 13:44",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/playlist?list=PLJMhUA2O7Tt9IrChI3C_kDP8IPhIkbRRf",
-      "title": "View full playlist",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=M3whoPWz-90",
-      "title": "45 lessons",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=JXpfUNfdGgE",
-      "title": "Aesop's Fables | std 4 | English Balbharati | lesson 2 | English Medium | Maharashtra State Board \u00b7 14:07",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/playlist?list=PLAiWZQJmg9HnNzuKUFAFvi5QPNG_5jAb5",
-      "title": "View full course",
-      "channel": "YouTube"
-    },
-    {
-      "url": "https://www.youtube.com/watch?v=_Z1e7hyMJv0",
-      "title": "9 videos",
-      "channel": "YouTube"
+      "url": "https://www.youtube.com/results?search_query=React+Hooks+playlist",
+      "title": "Search YouTube: React Hooks playlists",
+      "channel": "YouTube Search"
     }
   ],
-  "questions": [],
-  "scraped_at": "2026-02-22 04:52:17"
+  "qa_content": [
+    {
+      "title": "The useState set method is not reflecting a change immediately",
+      "url": "https://stackoverflow.com/questions/54069253/the-usestate-set-method-is-not-reflecting-a-change-immediately",
+      "score": 908,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "How to fix missing dependency warning when using useEffect React Hook",
+      "url": "https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook",
+      "score": 890,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "useEffect() is called twice even if an empty array is used as an argument",
+      "url": "https://stackoverflow.com/questions/60618844/useeffect-is-called-twice-even-if-an-empty-array-is-used-as-an-argument",
+      "score": 808,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "How to call loading function with React useEffect only once",
+      "url": "https://stackoverflow.com/questions/53120972/how-to-call-loading-function-with-react-useeffect-only-once",
+      "score": 594,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "React Hook Warnings for async function in useEffect: useEffect function must return a cleanup function or nothing",
+      "url": "https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret",
+      "score": 593,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "How to use componentWillMount() in React Hooks?",
+      "url": "https://stackoverflow.com/questions/53464595/how-to-use-componentwillmount-in-react-hooks",
+      "score": 440,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "How to use `setState` callback on react hooks",
+      "url": "https://stackoverflow.com/questions/56247433/how-to-use-setstate-callback-on-react-hooks",
+      "score": 423,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "How to compare oldValues and newValues on React Hooks useEffect?",
+      "url": "https://stackoverflow.com/questions/53446020/how-to-compare-oldvalues-and-newvalues-on-react-hooks-useeffect",
+      "score": 420,
+      "source": "stackoverflow"
+    },
+    {
+      "title": "I [32f] want to hit on my neighbor [30m] without being creepy",
+      "url": "https://www.reddit.com/r/BestofRedditorUpdates/comments/1rew1p1/i_32f_want_to_hit_on_my_neighbor_30m_without/",
+      "score": 3190,
+      "source": "reddit-learnprogramming"
+    },
+    {
+      "title": "Behold the 3 overshield merchants",
+      "url": "https://www.reddit.com/r/rivals/comments/1ro8l59/behold_the_3_overshield_merchants/",
+      "score": 1392,
+      "source": "reddit-learnprogramming"
+    },
+    {
+      "title": "AIO that my boyfriend got another woman\u2019s number.",
+      "url": "https://www.reddit.com/r/BestofRedditorUpdates/comments/1rxqb0r/aio_that_my_boyfriend_got_another_womans_number/",
+      "score": 1163,
+      "source": "reddit-learnprogramming"
+    },
+    {
+      "title": "I made a mod that adds historical pre-1037 investiture. Your heir has to beg his liege for permission, and he can say no",
+      "url": "https://www.reddit.com/r/CrusaderKings/comments/1rs3of4/i_made_a_mod_that_adds_historical_pre1037/",
+      "score": 1087,
+      "source": "reddit-learnprogramming"
+    },
+    {
+      "title": "Unpopular opinion: Ilya didn\u2019t ghost Shane and Vegas wasn\u2019t toxic",
+      "url": "https://www.reddit.com/r/HeatedRivalryTVShow/comments/1rrjw9x/unpopular_opinion_ilya_didnt_ghost_shane_and/",
+      "score": 1018,
+      "source": "reddit-learnprogramming"
+    }
+  ],
+  "scraped_at": "2026-03-21T17:02:14.423930",
+  "summary": {
+    "total_tutorials": 1,
+    "total_playlists": 1,
+    "total_qa": 13
+  }
 }

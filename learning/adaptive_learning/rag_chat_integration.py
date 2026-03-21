@@ -8,18 +8,18 @@ from .models import StudySession
 
 
 class RAGChatIntegration:
-    """Integrate with Grok AI for content-based Q&A"""
+    """Integrate with Google Gemini AI for content-based Q&A"""
     
     def __init__(self):
-        self.api_key = os.environ.get('XAI_API_KEY')  # Grok AI API key
-        self.api_url = "https://api.x.ai/v1/chat/completions"
-        self.model = "grok-beta"
+        from django.conf import settings
+        self.api_key = getattr(settings, 'GEMINI_API_KEY', None) or os.environ.get('GEMINI_API_KEY')
+        self.model_name = "gemini-2.0-flash"
         self.timeout = 30  # seconds
     
     @classmethod
     def send_query(cls, session_id: int, query: str, context: str = None) -> dict:
         """
-        Send query to Grok AI with content context
+        Send query to Gemini AI with content context
         
         Args:
             session_id: StudySession ID
@@ -27,7 +27,7 @@ class RAGChatIntegration:
             context: Optional additional context
             
         Returns:
-            dict with response from Grok AI
+            dict with response from Gemini AI
         """
         try:
             session = StudySession.objects.get(id=session_id)
@@ -38,7 +38,9 @@ class RAGChatIntegration:
         content_text = session.content.transcript if session.content else ""
         
         # Use provided context or content transcript
-        full_context = context or content_text[:5000]  # Limit context size
+        # Gemini has a very large context window, so we can send more if needed,
+        # but 15000 chars is usually plenty for most videos/docs.
+        full_context = context or content_text[:15000]
         
         try:
             # Create instance to access instance variables
@@ -46,46 +48,37 @@ class RAGChatIntegration:
             
             if not instance.api_key:
                 return {
-                    'error': 'XAI_API_KEY not configured',
-                    'fallback_response': 'Chat service is not configured. Please set up your Grok AI API key.'
+                    'error': 'GEMINI_API_KEY not configured',
+                    'fallback_response': 'Chat service is not configured. Please set up your Gemini API key.'
                 }
             
-            # Prepare prompt with context
-            system_prompt = """You are an intelligent tutor helping students understand their study material. 
-Answer questions based on the provided content context. Be clear, concise, and educational.
-If the question is not related to the content, politely redirect the student to focus on the study material."""
+            import google.generativeai as genai
+            genai.configure(api_key=instance.api_key)
+            model = genai.GenerativeModel(instance.model_name)
             
-            user_prompt = f"""Content Context:
+            # Prepare prompt with context
+            system_prompt = """You are an intelligent tutor helping students understand their study material.
+STRICT RULE: Answer questions ONLY based on the provided content context below. 
+Do NOT use your outside knowledge to answer. If the answer is not in the content, say "I'm sorry, but that information is not covered in your study material."
+Be clear, concise, and educational."""
+            
+            user_prompt = f"""CONTENT CONTEXT:
 {full_context}
 
-Student Question: {query}
+STUDENT QUESTION: {query}
 
-Please provide a helpful answer based on the content above."""
+INSTRUCTION: Answer strictly from the content context above."""
             
-            # Call Grok AI API
-            response = requests.post(
-                instance.api_url,
-                headers={
-                    "Authorization": f"Bearer {instance.api_key}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": instance.model,
-                    "messages": [
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt}
-                    ],
-                    "temperature": 0.7,
-                    "max_tokens": 1000
-                },
-                timeout=instance.timeout
+            # Call Gemini
+            response = model.generate_content(
+                f"{system_prompt}\n\n{user_prompt}",
+                generation_config=genai.types.GenerationConfig(
+                    temperature=0.2, # Lower temperature for more factual responses
+                    max_output_tokens=1000,
+                )
             )
             
-            response.raise_for_status()
-            
-            # Parse response
-            result = response.json()
-            answer = result['choices'][0]['message']['content']
+            answer = response.text
             
             # Record interaction
             cls.record_chat_interaction(session_id, query, answer)
@@ -93,28 +86,16 @@ Please provide a helpful answer based on the content above."""
             return {
                 'success': True,
                 'response': answer,
-                'sources': ['Grok AI'],
-                'confidence': 0.9
-            }
-        
-        except requests.exceptions.ConnectionError:
-            return {
-                'error': 'Grok AI API not available',
-                'message': 'Could not connect to Grok AI. Please check your internet connection.',
-                'fallback_response': 'I apologize, but I cannot answer your question right now. The chat service is temporarily unavailable.'
-            }
-        
-        except requests.exceptions.Timeout:
-            return {
-                'error': 'Request timeout',
-                'message': 'Grok AI took too long to respond',
-                'fallback_response': 'Your question is taking longer than expected to process. Please try again.'
+                'sources': ['Gemini AI'],
+                'confidence': 0.95
             }
         
         except Exception as e:
+            error_msg = str(e)
+            print(f"[RAG] Gemini query failed: {error_msg}")
             return {
-                'error': f'Grok AI query failed: {str(e)}',
-                'fallback_response': 'I encountered an error processing your question. Please try rephrasing it.'
+                'error': f'Gemini query failed: {error_msg}',
+                'fallback_response': 'I encountered an error processing your question with Gemini. Please try again.'
             }
     
     @classmethod

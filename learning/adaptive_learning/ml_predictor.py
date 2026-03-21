@@ -9,19 +9,18 @@ from django.conf import settings
 
 class AdaptiveLearningPredictor:
     """
-    Predicts next difficulty level based on student performance
+    Predicts next difficulty level based on student performance (v2 with 13 features)
     """
     
     def __init__(self):
         self.model = None
-        # Try multiple model file names
+        # Try multiple model file names, prioritizing V2
         model_dir = os.path.join(settings.BASE_DIR, 'adaptive_learning', 'ml_models')
         possible_models = [
+            'adaptive_model_v2.pkl',
             'adaptive_model.pkl',
             'random_forest_classifier_model.joblib',
-            'adaptive_model.joblib',
-            'model.pkl',
-            'model.joblib'
+            'adaptive_model.joblib'
         ]
         
         self.model_path = None
@@ -31,77 +30,76 @@ class AdaptiveLearningPredictor:
                 self.model_path = path
                 break
         
+        self.is_v2 = "v2" in (self.model_path or "")
         self.load_model()
     
     def load_model(self):
         """Load the trained ML model"""
         try:
             if self.model_path and os.path.exists(self.model_path):
-                # Try to load the model
-                try:
-                    self.model = joblib.load(self.model_path)
-                    print(f"✅ ML Model loaded from {self.model_path}")
-                except Exception as load_error:
-                    # Model file exists but can't be loaded (e.g., pandas version mismatch)
-                    print(f"⚠️ ML Model found but couldn't be loaded: {str(load_error)[:100]}")
-                    print("   This is usually due to Python/pandas version mismatch")
-                    print("   Using rule-based fallback (works perfectly fine!)")
-                    self.model = None
+                self.model = joblib.load(self.model_path)
+                version = "v2 (13 features)" if self.is_v2 else "v1 (8 features)"
+                print(f"✅ ML Model {version} loaded from {self.model_path}")
             else:
-                print(f"⚠️ ML Model not found in adaptive_learning/ml_models/")
-                print("   Checked for: adaptive_model.pkl, random_forest_classifier_model.joblib, etc.")
-                print("   Using rule-based fallback")
+                print(f"⚠️ ML Model not found. Using rule-based fallback.")
         except Exception as e:
             print(f"❌ Error loading ML model: {e}")
-            print("   Using rule-based fallback")
+            self.model = None
     
     def predict_next_difficulty(self, user_data):
         """
-        Predict next difficulty level
-        
-        Args:
-            user_data (dict): {
-                'accuracy': float (0-100),
-                'avg_time_per_question': float (10-120),
-                'first_attempt_correct': float (0-100),
-                'current_difficulty': int (1-3),
-                'sessions_completed': int (1-50),
-                'score_trend': float (-50 to +50),
-                'mastery_level': float (0-1),
-                'is_new_topic': int (0 or 1)
-            }
-        
-        Returns:
-            int: Next difficulty level (1, 2, or 3)
+        Predict next difficulty level using 13 features (v2) or 8 features (v1)
         """
-        # Extract features
         features = self._extract_features(user_data)
         
-        # Try ML prediction first
         if self.model is not None:
             try:
+                # Predict
                 prediction = self.model.predict([features])[0]
+                
+                # XGBoost v2 outputs 0,1,2 -> map back to 1,2,3
+                if self.is_v2:
+                    prediction += 1
+                
                 # Apply business rules
                 prediction = self._apply_business_rules(prediction, user_data)
                 return int(prediction)
             except Exception as e:
                 print(f"ML prediction failed: {e}, using rule-based fallback")
         
-        # Fallback to rule-based prediction
         return self._rule_based_prediction(user_data)
     
     def _extract_features(self, user_data):
         """Extract features in correct order for ML model"""
-        return [
-            user_data.get('accuracy', 50.0),
-            user_data.get('avg_time_per_question', 60.0),
-            user_data.get('first_attempt_correct', 50.0),
-            user_data.get('current_difficulty', 1),
-            user_data.get('sessions_completed', 1),
-            user_data.get('score_trend', 0.0),
-            user_data.get('mastery_level', 0.0),
-            user_data.get('is_new_topic', 0)
-        ]
+        if self.is_v2:
+            # 13 Features for v2
+            return [
+                user_data.get('accuracy', 50.0),
+                user_data.get('avg_time_per_question', 60.0),
+                user_data.get('first_attempt_correct', 50.0),
+                user_data.get('current_difficulty', 1),
+                user_data.get('sessions_completed', 1),
+                user_data.get('score_trend', 0.0),
+                user_data.get('mastery_level', 0.0),
+                user_data.get('is_new_topic', 0),
+                user_data.get('engagement_score', 70.0),
+                user_data.get('active_time_ratio', 0.8),
+                user_data.get('tab_switch_rate', 0.5),
+                user_data.get('interaction_density', 8.0),
+                user_data.get('session_length_dev', 0.0)
+            ]
+        else:
+            # Original 8 features for v1
+            return [
+                user_data.get('accuracy', 50.0),
+                user_data.get('avg_time_per_question', 60.0),
+                user_data.get('first_attempt_correct', 50.0),
+                user_data.get('current_difficulty', 1),
+                user_data.get('sessions_completed', 1),
+                user_data.get('score_trend', 0.0),
+                user_data.get('mastery_level', 0.0),
+                user_data.get('is_new_topic', 0)
+            ]
     
     def _apply_business_rules(self, prediction, user_data):
         """

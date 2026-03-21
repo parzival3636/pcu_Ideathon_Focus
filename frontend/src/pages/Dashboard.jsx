@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, BookOpen, Zap, LogOut, Clock, AlertCircle, CheckCircle, XCircle, TrendingUp, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { dashboardAPI, authenticationAPI } from '../services/api';
+import { dashboardAPI, authenticationAPI, studySessionAPI } from '../services/api';
 import { useLanguage } from '../i18n/LanguageContext';
 import FeatureSidebar from '../components/FeatureSidebar';
 
@@ -12,6 +12,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState(null);
   const [error, setError] = useState(null);
+  const [retryingIds, setRetryingIds] = useState(new Set());
 
   useEffect(() => {
     loadDashboard();
@@ -36,6 +37,24 @@ export default function Dashboard() {
       setError('Failed to load dashboard data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleRetry = async (sessionId) => {
+    try {
+      setRetryingIds(prev => new Set([...prev, sessionId]));
+      await studySessionAPI.retryGeneration(sessionId);
+      // Refresh dashboard after a short delay to see "Generating" state
+      setTimeout(loadDashboard, 1000);
+    } catch (err) {
+      console.error('Failed to retry generation:', err);
+      alert('Failed to trigger retry. Please check your connection.');
+    } finally {
+      setRetryingIds(prev => {
+        const next = new Set(prev);
+        next.delete(sessionId);
+        return next;
+      });
     }
   };
 
@@ -344,6 +363,30 @@ export default function Dashboard() {
                             <span className="text-sm font-medium">Questions are being generated...</span>
                           </div>
                           <p className="text-xs text-gray-400 mt-1">Refresh in a moment to take your test</p>
+                        </div>
+                      )}
+
+                      {isCompleted && testStatus.failed && (
+                        <div className="w-full p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+                          <div className="flex items-center gap-2 text-red-400 mb-2">
+                            <AlertCircle className="w-4 h-4" />
+                            <span className="text-sm font-bold">Generation Failed</span>
+                          </div>
+                          <p className="text-xs text-gray-400 mb-3 line-clamp-2">
+                            {testStatus.error_message || "An error occurred while generating questions."}
+                          </p>
+                          <button
+                            onClick={() => handleRetry(session.id)}
+                            disabled={retryingIds.has(session.id)}
+                            className="w-full py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded flex items-center justify-center gap-2 text-xs font-bold transition-colors disabled:opacity-50"
+                          >
+                            {retryingIds.has(session.id) ? (
+                              <div className="w-3 h-3 border-2 border-red-400 border-t-transparent rounded-full animate-spin" />
+                            ) : (
+                              <Zap className="w-3 h-3" />
+                            )}
+                            {retryingIds.has(session.id) ? "Retrying..." : "Try Again"}
+                          </button>
                         </div>
                       )}
 

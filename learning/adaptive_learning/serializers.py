@@ -36,8 +36,8 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = [
-            'id', 'question_text', 'options', 'correct_answer_index',
-            'explanation', 'difficulty', 'concept', 'order'
+            'id', 'question_text', 'question_type', 'options', 'correct_answer_index',
+            'correct_answer', 'explanation', 'difficulty', 'concept', 'order'
         ]
         read_only_fields = ['id']
 
@@ -46,7 +46,8 @@ class UserAnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAnswer
         fields = [
-            'id', 'question', 'selected_answer_index', 'is_correct',
+            'id', 'question', 'selected_answer_index', 'user_answer', 
+            'is_correct', 'feedback', 'score',
             'time_taken_seconds', 'attempt_number', 'answered_at'
         ]
         read_only_fields = ['id', 'answered_at', 'is_correct']

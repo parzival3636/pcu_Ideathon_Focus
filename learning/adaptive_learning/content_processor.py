@@ -24,10 +24,23 @@ def process_content(content):
     """
     try:
         if content.content_type == 'youtube':
-            # SKIP transcript extraction - we use workspace name instead
-            print(f"[Content] Skipping transcript extraction for YouTube video (using workspace name)")
-            content.transcript = ""
-            content.source_language = 'en'
+            # Extract transcript for YouTube video
+            print(f"[Content] Extracting transcript for YouTube video: {content.url}")
+            try:
+                transcript, lang = extract_youtube_transcript(content.url)
+                content.transcript = transcript
+                content.source_language = lang
+                print(f"[Content] Successfully extracted {len(transcript)} chars in {lang}")
+            except Exception as e:
+                # Log the specific error type for debugging
+                error_type = type(e).__name__
+                error_msg = str(e)
+                print(f"[Content] YouTube transcript extraction failed ({error_type}): {error_msg}")
+                
+                # Set empty transcript and mark as processed to allow fallback
+                content.transcript = ""
+                content.source_language = 'en'
+                print(f"[Content] Set empty transcript - will fall back to topic-based generation")
         elif content.content_type == 'pdf':
             content.transcript = extract_pdf_text(content.file.path)
             content.source_language = 'en'
@@ -38,8 +51,8 @@ def process_content(content):
             content.transcript = extract_word_text(content.file.path)
             content.source_language = 'en'
         
-        # Skip key concepts extraction for YouTube
-        if content.content_type != 'youtube' and content.transcript and len(content.transcript) > 50:
+        # Extract key concepts for all content types (including YouTube) if transcript exists
+        if content.transcript and len(content.transcript) > 50:
             content.key_concepts = extract_key_concepts(content.transcript)
         else:
             content.key_concepts = []
@@ -121,7 +134,7 @@ def extract_youtube_transcript(url: str) -> Tuple[str, str]:
     if ok:
         text, lang = result
         if text and len(text.strip()) > 30:
-            print(f"[Transcript] ✅ Method 1 succeeded ({len(text)} chars, lang={lang})")
+            print(f"[Transcript] [OK] Method 1 succeeded ({len(text)} chars, lang={lang})")
             return text, lang
         else:
             errors.append("youtube-transcript-api returned empty/short transcript")
@@ -137,7 +150,7 @@ def extract_youtube_transcript(url: str) -> Tuple[str, str]:
     if ok:
         text, lang = result
         if text and len(text.strip()) > 30:
-            print(f"[Transcript] ✅ Method 2 succeeded ({len(text)} chars, lang={lang})")
+            print(f"[Transcript] [OK] Method 2 succeeded ({len(text)} chars, lang={lang})")
             return text, lang
         else:
             errors.append("yt-dlp returned empty/short subtitle text")
@@ -153,7 +166,7 @@ def extract_youtube_transcript(url: str) -> Tuple[str, str]:
     if ok:
         text, lang = result
         if text and len(text.strip()) > 30:
-            print(f"[Transcript] ✅ Method 3 succeeded ({len(text)} chars, lang={lang})")
+            print(f"[Transcript] [OK] Method 3 succeeded ({len(text)} chars, lang={lang})")
             return text, lang
         else:
             errors.append("Innertube returned empty/short transcript")
@@ -169,7 +182,7 @@ def extract_youtube_transcript(url: str) -> Tuple[str, str]:
     if ok:
         text, lang = result
         if text and len(text.strip()) > 30:
-            print(f"[Transcript] ✅ Method 4 (Gemini AI) succeeded ({len(text)} chars)")
+            print(f"[Transcript] [OK] Method 4 (Gemini AI) succeeded ({len(text)} chars)")
             return text, lang
         else:
             errors.append("Gemini AI returned empty/short transcript")

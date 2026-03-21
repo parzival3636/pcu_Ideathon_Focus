@@ -10,6 +10,66 @@ import sys
 import datetime
 
 
+import re
+
+def _scrape_youtube_playlists(topic):
+    """
+    Scrape YouTube search results for playlists without using an API key
+    """
+    print(f"  🔍 Scraping YouTube for '{topic}' playlists...")
+    playlists = []
+    try:
+        search_query = f"{topic.replace(' ', '+')}+playlist"
+        url = f"https://www.youtube.com/results?search_query={search_query}&sp=EgIQAw%253D%253D" # sp=EgIQAw%3D%3D filters for playlists
+        
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+        
+        response = requests.get(url, headers=headers, timeout=15)
+        if response.status_code != 200:
+            return []
+            
+        # YouTube embeds data in a JSON object in the source
+        html = response.text
+        json_str = re.search(r'var ytInitialData = (\{.*?\});', html)
+        if not json_str:
+            return []
+            
+        data = json.loads(json_str.group(1))
+        
+        # Traverse the complex YouTube JSON structure to find playlist items
+        contents = data.get('contents', {}).get('twoColumnBrowseResultsRenderer', {}).get('tabs', [{}])[0].get('content', {}).get('sectionListRenderer', {}).get('contents', [])
+        if not contents:
+            # Try alternative path
+            contents = data.get('contents', {}).get('twoColumnSearchResultsRenderer', {}).get('primaryContents', {}).get('sectionListRenderer', {}).get('contents', [])
+            
+        for section in contents:
+            items = section.get('itemSectionRenderer', {}).get('contents', [])
+            for item in items:
+                playlist_data = item.get('playlistRenderer')
+                if playlist_data:
+                    p_id = playlist_data.get('playlistId')
+                    title = playlist_data.get('title', {}).get('runs', [{}])[0].get('text', 'Unknown Playlist')
+                    channel = playlist_data.get('longBylineText', {}).get('runs', [{}])[0].get('text', 'Unknown Channel')
+                    
+                    playlists.append({
+                        'url': f"https://www.youtube.com/playlist?list={p_id}",
+                        'title': title,
+                        'channel': channel,
+                        'source': 'youtube_search'
+                    })
+                    
+                    if len(playlists) >= 10:
+                        break
+            if len(playlists) >= 10:
+                break
+                
+    except Exception as e:
+        print(f"  ✗ YouTube scraping failed: {e}")
+        
+    return playlists
+
 def get_tutorials_from_multiple_sources(topic):
     """
     Get tutorials from multiple reliable sources
@@ -167,16 +227,20 @@ def get_youtube_playlists(topic):
             print(f"  ✓ Added {len(curated_playlists[key])} curated playlists")
             break
     
-    # If no curated playlists, provide API instructions
+    # If no curated playlists, scrape YouTube search results
     if not playlists:
-        print(f"  ℹ No curated playlists for '{topic}'")
-        print(f"  ℹ To get playlists, use YouTube Data API v3:")
-        print(f"     https://www.googleapis.com/youtube/v3/search?q={topic}+playlist&type=playlist")
-        
+        scraped_playlists = _scrape_youtube_playlists(topic)
+        if scraped_playlists:
+            playlists.extend(scraped_playlists)
+            print(f"  ✓ Scraped {len(scraped_playlists)} playlists from YouTube search")
+            
+    # Final Fallback: Provide Google/YouTube search URLs if still nothing (unlikely)
+    if not playlists:
+        print(f"  ℹ No playlists found for '{topic}', providing search links")
         # Add generic search URL
         playlists.append({
             'url': f'https://www.youtube.com/results?search_query={topic.replace(" ", "+")}+playlist',
-            'title': f'Search: {topic} playlists',
+            'title': f'Search YouTube: {topic} playlists',
             'channel': 'YouTube Search'
         })
     

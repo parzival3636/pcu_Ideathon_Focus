@@ -17,9 +17,9 @@ class QuestionGenerator:
     """
 
     def __init__(self):
-        self.api_key = os.environ.get('XAI_API_KEY')
-        self.api_url = "https://api.x.ai/v1/chat/completions"
-        self.model = "grok-beta"
+        from django.conf import settings
+        self.api_key = getattr(settings, 'GEMINI_API_KEY', None) or os.environ.get('GEMINI_API_KEY')
+        self.model_name = "gemini-2.0-flash"
         self.max_retries = 3
         self.retry_delay = 2  # seconds
 
@@ -28,50 +28,50 @@ class QuestionGenerator:
     # -------------------------------------------------------------------------
 
     def generate_mcq_questions(self, content: str, concepts: List[str], difficulty: int, count: int) -> List[Dict]:
-        """Generate MCQ questions — Grok API first, concept-based fallback second"""
+        """Generate MCQ questions — Gemini API first, concept-based fallback second"""
         try:
             if self.api_key:
-                questions = self._call_grok_api(content, concepts, difficulty, count, 'mcq')
+                questions = self._call_gemini_api(content, concepts, difficulty, count, 'mcq')
                 if questions and len(questions) >= count // 2:
                     return questions[:count]
-                print(f"[QGen] Grok returned only {len(questions) if questions else 0} MCQ — using fallback")
+                print(f"[QGen] Gemini returned only {len(questions) if questions else 0} MCQ — using fallback")
             else:
-                print("[QGen] XAI_API_KEY not set — using fallback MCQ generator")
+                print("[QGen] GEMINI_API_KEY not set — using fallback MCQ generator")
         except Exception as e:
-            print(f"[QGen] Grok MCQ failed: {e} — using fallback")
+            print(f"[QGen] Gemini MCQ failed: {e} — using fallback")
         return self._generate_fallback_mcq(content, concepts, difficulty, count)
 
     def generate_short_answer_questions(self, content: str, concepts: List[str], difficulty: int, count: int) -> List[Dict]:
-        """Generate Short Answer questions — Grok API first, concept-based fallback second"""
+        """Generate Short Answer questions — Gemini API first, concept-based fallback second"""
         try:
             if self.api_key:
-                questions = self._call_grok_api(content, concepts, difficulty, count, 'short_answer')
+                questions = self._call_gemini_api(content, concepts, difficulty, count, 'short_answer')
                 if questions and len(questions) >= count // 2:
                     return questions[:count]
-                print(f"[QGen] Grok returned only {len(questions) if questions else 0} SA — using fallback")
+                print(f"[QGen] Gemini returned only {len(questions) if questions else 0} SA — using fallback")
             else:
-                print("[QGen] XAI_API_KEY not set — using fallback Short Answer generator")
+                print("[QGen] GEMINI_API_KEY not set — using fallback Short Answer generator")
         except Exception as e:
-            print(f"[QGen] Grok SA failed: {e} — using fallback")
+            print(f"[QGen] Gemini SA failed: {e} — using fallback")
         return self._generate_fallback_short_answer(content, concepts, difficulty, count)
 
     def generate_problem_solving_questions(self, content: str, concepts: List[str], difficulty: int, count: int) -> List[Dict]:
-        """Generate Problem Solving questions — Grok API first, concept-based fallback second"""
+        """Generate Problem Solving questions — Gemini API first, concept-based fallback second"""
         try:
             if self.api_key:
-                questions = self._call_grok_api(content, concepts, difficulty, count, 'problem_solving')
+                questions = self._call_gemini_api(content, concepts, difficulty, count, 'problem_solving')
                 if questions and len(questions) >= count // 2:
                     return questions[:count]
-                print(f"[QGen] Grok returned only {len(questions) if questions else 0} PS — using fallback")
+                print(f"[QGen] Gemini returned only {len(questions) if questions else 0} PS — using fallback")
             else:
-                print("[QGen] XAI_API_KEY not set — using fallback Problem Solving generator")
+                print("[QGen] GEMINI_API_KEY not set — using fallback Problem Solving generator")
         except Exception as e:
-            print(f"[QGen] Grok PS failed: {e} — using fallback")
+            print(f"[QGen] Gemini PS failed: {e} — using fallback")
         return self._generate_fallback_problem_solving(content, concepts, difficulty, count)
 
     def assess_answer(self, question: str, expected_answer: str, user_answer: str, question_type: str) -> Dict:
         """
-        Assess open-ended answer using Grok AI API.
+        Assess open-ended answer using Gemini AI API.
         Returns dict with score (0-100), is_correct (bool), feedback (str), confidence (float)
         """
         if not user_answer or not user_answer.strip():
@@ -79,27 +79,27 @@ class QuestionGenerator:
 
         try:
             if not self.api_key:
-                raise ValueError("XAI_API_KEY not set")
-            result = self._call_grok_assessment(question, expected_answer, user_answer, question_type)
+                raise ValueError("GEMINI_API_KEY not set")
+            result = self._call_gemini_assessment(question, expected_answer, user_answer, question_type)
             if result:
                 return result
         except Exception as e:
-            print(f"[QGen] Grok assessment failed: {e}")
+            print(f"[QGen] Gemini assessment failed: {e}")
 
         return self._fallback_evaluate(user_answer, expected_answer)
 
     # -------------------------------------------------------------------------
-    # CORE GROK API CALL
+    # CORE GEMINI API CALL
     # -------------------------------------------------------------------------
 
-    def _call_grok_api(self, content: str, concepts: List[str], difficulty: int, count: int, question_type: str) -> List[Dict]:
-        """Call Grok AI API to generate questions from the full transcript context"""
-        import requests
+    def _call_gemini_api(self, content: str, concepts: List[str], difficulty: int, count: int, question_type: str) -> List[Dict]:
+        """Call Gemini AI API to generate questions from the full transcript context"""
+        import google.generativeai as genai
 
         difficulty_map = {1: 'intermediate', 2: 'advanced', 3: 'expert'}
         difficulty_text = difficulty_map.get(difficulty, 'intermediate')
 
-        # Build a smart transcript summary for context (up to 12000 chars – covers ~3000 tokens)
+        # Build a smart transcript summary for context (Gemini can handle much more, but we keep it efficient)
         transcript_summary = self._build_transcript_summary(content, concepts)
 
         if question_type == 'mcq':
@@ -117,26 +117,18 @@ class QuestionGenerator:
 
         for attempt in range(self.max_retries):
             try:
-                response = requests.post(
-                    self.api_url,
-                    headers={
-                        "Authorization": f"Bearer {self.api_key}",
-                        "Content-Type": "application/json"
-                    },
-                    json={
-                        "model": self.model,
-                        "messages": [
-                            {"role": "system", "content": system_msg},
-                            {"role": "user", "content": prompt}
-                        ],
-                        "temperature": 0.5,
-                        "max_tokens": 4000
-                    },
-                    timeout=60
+                genai.configure(api_key=self.api_key)
+                model = genai.GenerativeModel(self.model_name)
+                
+                response = model.generate_content(
+                    f"{system_msg}\n\n{prompt}",
+                    generation_config=genai.types.GenerationConfig(
+                        temperature=0.5,
+                        max_output_tokens=4000,
+                    )
                 )
-                response.raise_for_status()
-                result = response.json()
-                content_text = result['choices'][0]['message']['content'].strip()
+                
+                content_text = response.text.strip()
 
                 # Strip markdown code fences if present
                 content_text = re.sub(r'^```(?:json)?\s*', '', content_text, flags=re.MULTILINE)
@@ -151,7 +143,7 @@ class QuestionGenerator:
                     # Validate and normalize
                     validated = self._validate_questions(questions, question_type)
                     if validated:
-                        print(f"[QGen] Grok generated {len(validated)} {question_type} questions")
+                        print(f"[QGen] Gemini generated {len(validated)} {question_type} questions")
                         return validated
 
             except Exception as e:
@@ -161,9 +153,9 @@ class QuestionGenerator:
 
         return []
 
-    def _call_grok_assessment(self, question: str, expected_answer: str, user_answer: str, question_type: str) -> Dict:
-        """Call Grok AI API to assess an open-ended answer"""
-        import requests
+    def _call_gemini_assessment(self, question: str, expected_answer: str, user_answer: str, question_type: str) -> Dict:
+        """Call Gemini AI API to assess an open-ended answer"""
+        import google.generativeai as genai
 
         prompt = f"""You are evaluating a student's answer to a technical question.
 
@@ -191,23 +183,18 @@ Return ONLY this JSON object:
 
         for attempt in range(self.max_retries):
             try:
-                response = requests.post(
-                    self.api_url,
-                    headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"},
-                    json={
-                        "model": self.model,
-                        "messages": [
-                            {"role": "system", "content": "You are a strict technical evaluator. Return only valid JSON."},
-                            {"role": "user", "content": prompt}
-                        ],
-                        "temperature": 0.2,
-                        "max_tokens": 400
-                    },
-                    timeout=30
+                genai.configure(api_key=self.api_key)
+                model = genai.GenerativeModel(self.model_name)
+                
+                response = model.generate_content(
+                    prompt,
+                    generation_config=genai.types.GenerationConfig(
+                        temperature=0.2,
+                        max_output_tokens=400,
+                    )
                 )
-                response.raise_for_status()
-                result = response.json()
-                content_text = result['choices'][0]['message']['content'].strip()
+                
+                content_text = response.text.strip()
                 content_text = re.sub(r'^```(?:json)?\s*', '', content_text, flags=re.MULTILINE)
                 content_text = re.sub(r'\s*```$', '', content_text, flags=re.MULTILINE)
 

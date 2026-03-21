@@ -3,9 +3,13 @@
  */
 import axios from 'axios';
 
+// Dynamically determine backend host (ensures cookies work for both localhost and 127.0.0.1)
+const baseHost = window.location.hostname || '127.0.0.1';
+const baseURL = `http://${baseHost}:8000`;
+
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api/adaptive',
+  baseURL: `${baseURL}/api/adaptive`,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -14,7 +18,7 @@ const api = axios.create({
 
 // Create separate instance for auth endpoints
 const authAPI = axios.create({
-  baseURL: 'http://localhost:8000',
+  baseURL: baseURL,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -281,6 +285,9 @@ export const studySessionAPI = {
 
   // Get violations summary
   getViolations: (id) => api.get(`/study-sessions/${id}/violations/`),
+
+  // Retry test generation
+  retryGeneration: (id) => api.post(`/study-sessions/${id}/retry_generation/`),
 };
 
 // ============ SESSION MONITORING API ============

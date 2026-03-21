@@ -13,7 +13,7 @@ export default function Assessment() {
   const [assessment, setAssessment] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [selectedAnswers, setSelectedAnswers] = useState({}); // Stores index for MCQ, string for open-ended
   const [showResults, setShowResults] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -158,11 +158,18 @@ export default function Assessment() {
         const q = questions[i];
         const sel = selectedAnswers[i];
         if (sel !== undefined) {
-          await api.post(`/assessments/${assessmentId}/submit_answer/`, {
+          const payload = {
             question_id: q.id,
-            selected_answer_index: sel,
             time_taken_seconds: questionTimesRef.current[i] || 60,
-          });
+          };
+          
+          if (q.question_type === 'mcq') {
+            payload.selected_answer_index = sel;
+          } else {
+            payload.user_answer = sel;
+          }
+
+          await api.post(`/assessments/${assessmentId}/submit_answer/`, payload);
         }
       }
       await api.post(`/assessments/${assessmentId}/complete/`);
@@ -175,9 +182,9 @@ export default function Assessment() {
   };
 
   // ─── Handlers ─────────────────────────────────────────────────────────
-  const handleSelectAnswer = (optionIndex) => {
+  const handleSelectAnswer = (ans) => {
     if (testTerminated) return;
-    setSelectedAnswers({ ...selectedAnswers, [currentQuestionIndex]: optionIndex });
+    setSelectedAnswers({ ...selectedAnswers, [currentQuestionIndex]: ans });
   };
 
   const goToQuestion = (index) => {
@@ -201,7 +208,13 @@ export default function Assessment() {
   const calculateScore = () => {
     let correct = 0;
     questions.forEach((q, i) => {
-      if (selectedAnswers[i] === q.correct_answer_index) correct++;
+      if (q.question_type === 'mcq') {
+        if (selectedAnswers[i] === q.correct_answer_index) correct++;
+      } else {
+        // For open-ended, we might not have the assessment result yet or it might be stored in the answer record
+        // This is a simplified frontend score; real score comes from backend completion
+        if (selectedAnswers[i] && selectedAnswers[i].length > 10) correct++; 
+      }
     });
     return { correct, total: questions.length, percentage: Math.round((correct / questions.length) * 100) };
   };
@@ -285,15 +298,28 @@ export default function Assessment() {
             <div className="space-y-4 mb-8 max-h-[50vh] overflow-y-auto pr-2">
               {questions.map((q, index) => {
                 const ua = selectedAnswers[index];
-                const isCorrect = ua === q.correct_answer_index;
+                const isMCQ = q.question_type === 'mcq';
+                const isCorrect = isMCQ ? ua === q.correct_answer_index : !!ua;
                 return (
                   <div key={index} className={`bg-white/5 rounded-xl p-5 text-left border ${isCorrect ? 'border-green-500/40' : 'border-red-500/40'}`}>
                     <div className="flex items-start gap-3">
                       {isCorrect ? <CheckCircle className="w-5 h-5 text-green-400 mt-1 flex-shrink-0" /> : <XCircle className="w-5 h-5 text-red-400 mt-1 flex-shrink-0" />}
                       <div className="flex-1">
                         <p className="font-semibold mb-1">Q{index + 1}: {q.question_text}</p>
-                        <p className="text-sm text-gray-400">Your answer: <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>{ua !== undefined ? q.options[ua] : 'Not answered'}</span></p>
-                        {!isCorrect && <p className="text-sm text-gray-400">Correct: <span className="text-green-400">{q.options[q.correct_answer_index]}</span></p>}
+                        <div className="text-sm text-gray-400 mb-2">
+                          Your answer: <span className={isCorrect ? 'text-green-400' : 'text-red-400'}>
+                            {ua !== undefined ? (isMCQ ? q.options[ua] : ua) : 'Not answered'}
+                          </span>
+                        </div>
+                        {isMCQ && !isCorrect && (
+                          <p className="text-sm text-gray-400">Correct: <span className="text-green-400">{q.options[q.correct_answer_index]}</span></p>
+                        )}
+                        {!isMCQ && q.correct_answer && (
+                          <div className="text-sm text-gray-400 mt-2 p-3 bg-white/5 rounded-lg border border-white/10">
+                            <span className="text-purple-300 font-semibold block mb-1">Reference Answer:</span>
+                            {q.correct_answer}
+                          </div>
+                        )}
                         {q.explanation && <p className="text-sm text-gray-300 mt-2 opacity-80">{q.explanation}</p>}
                       </div>
                     </div>
@@ -396,32 +422,49 @@ export default function Assessment() {
                   {currentQuestion?.question_text}
                 </h2>
 
-                {/* Options */}
-                <div className="space-y-3 max-w-3xl">
-                  {currentQuestion?.options && Array.isArray(currentQuestion.options) ? (
-                    currentQuestion.options.map((option, index) => {
-                      const isSelected = selectedAnswers[currentQuestionIndex] === index;
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => handleSelectAnswer(index)}
-                          disabled={testTerminated}
-                          className={`w-full p-4 rounded-xl text-left transition-all border flex items-start gap-3 ${isSelected
-                              ? 'bg-purple-600/20 border-purple-500 shadow-lg shadow-purple-500/10'
-                              : 'bg-white/[0.03] border-white/10 hover:border-purple-500/40 hover:bg-white/[0.06]'
-                            } ${testTerminated ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        >
-                          <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0 ${isSelected ? 'bg-purple-500 text-white' : 'bg-white/10 text-gray-400'
-                            }`}>
-                            {String.fromCharCode(65 + index)}
-                          </span>
-                          <span className="pt-1">{option}</span>
-                        </button>
-                      );
-                    })
+                {/* Options / Answer Input */}
+                <div className="space-y-4 max-w-3xl">
+                  {currentQuestion?.question_type === 'mcq' ? (
+                    currentQuestion?.options && Array.isArray(currentQuestion.options) ? (
+                      currentQuestion.options.map((option, index) => {
+                        const isSelected = selectedAnswers[currentQuestionIndex] === index;
+                        return (
+                          <button
+                            key={index}
+                            onClick={() => handleSelectAnswer(index)}
+                            disabled={testTerminated}
+                            className={`w-full p-4 rounded-xl text-left transition-all border flex items-start gap-3 ${isSelected
+                                ? 'bg-purple-600/20 border-purple-500 shadow-lg shadow-purple-500/10'
+                                : 'bg-white/[0.03] border-white/10 hover:border-purple-500/40 hover:bg-white/[0.06]'
+                              } ${testTerminated ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          >
+                            <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold flex-shrink-0 ${isSelected ? 'bg-purple-500 text-white' : 'bg-white/10 text-gray-400'
+                              }`}>
+                              {String.fromCharCode(65 + index)}
+                            </span>
+                            <span className="pt-1">{option}</span>
+                          </button>
+                        );
+                      })
+                    ) : (
+                      <div className="text-red-400 p-4 bg-red-500/10 rounded-xl border border-red-500/30">
+                        <p>Error: Question options not available</p>
+                      </div>
+                    )
                   ) : (
-                    <div className="text-red-400 p-4 bg-red-500/10 rounded-xl border border-red-500/30">
-                      <p>Error: Question options not available</p>
+                    <div className="space-y-4">
+                      <p className="text-sm text-gray-400 italic">Type your detailed technical answer below:</p>
+                      <textarea
+                        value={selectedAnswers[currentQuestionIndex] || ''}
+                        onChange={(e) => handleSelectAnswer(e.target.value)}
+                        disabled={testTerminated}
+                        placeholder="Start typing your answer here..."
+                        className="w-full h-64 p-5 rounded-xl bg-white/[0.03] border border-white/10 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all outline-none resize-none text-gray-200 leading-relaxed font-mono text-sm"
+                      />
+                      <div className="flex justify-between items-center text-[10px] text-gray-500 uppercase tracking-widest">
+                        <span>Characters: {(selectedAnswers[currentQuestionIndex] || '').length}</span>
+                        <span>Min recommended: 20 characters</span>
+                      </div>
                     </div>
                   )}
                 </div>

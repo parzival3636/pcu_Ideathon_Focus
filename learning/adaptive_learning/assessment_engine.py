@@ -309,61 +309,77 @@ class AssessmentEngine:
     @classmethod
     def prepare_ml_input(cls, test_id, session_id):
         """
-        Prepare data for ML difficulty predictor
-        
-        Args:
-            test_id: GeneratedTest ID
-            session_id: StudySession ID
-            
-        Returns:
-            dict with ML input data
+        Prepare 13 features for ML difficulty predictor (v2)
         """
         from .monitoring_collector import MonitoringCollector
+        from .models import StudySession, TestSubmission
         
         try:
             test = GeneratedTest.objects.get(id=test_id)
-        except GeneratedTest.DoesNotExist:
-            raise ValueError("Test not found")
+            session = StudySession.objects.get(id=session_id)
+        except (GeneratedTest.DoesNotExist, StudySession.DoesNotExist):
+            raise ValueError("Test or Session not found")
         
-        # Get test metrics
-        submissions = TestSubmission.objects.filter(
-            question__test=test,
-            user=test.user
-        )
-        
-        total_questions = submissions.count()
-        correct_answers = submissions.filter(is_correct=True).count()
-        accuracy = (correct_answers / total_questions * 100) if total_questions > 0 else 0
-        
-        # Calculate average time per question
+        # 1-8: Performance & Context
+        submissions = TestSubmission.objects.filter(question__test=test, user=test.user)
+        total_q = submissions.count()
+        correct_q = submissions.filter(is_correct=True).count()
+        accuracy = (correct_q / total_q * 100) if total_q > 0 else 0
         avg_time = submissions.aggregate(Avg('time_taken_seconds'))['time_taken_seconds__avg'] or 0
         
-        # First attempt correct rate (assuming single attempt per question)
+        # First attempt rate (we use accuracy as proxy in current schema)
         first_attempt_correct = accuracy
         
-        # Get session monitoring metrics
-        session_metrics = MonitoringCollector.aggregate_metrics(session_id)
-        
-        # Get user's session count
-        from .models import StudySession
+        # Sessions completed for this topic
+        topic = test.content.topic if test.content else None
         sessions_completed = StudySession.objects.filter(
             user=test.user,
+            content__topic=topic,
             is_completed=True
-        ).count()
+        ).count() if topic else 0
         
-        # Prepare ML input
+        # Score Trend
+        prev_test = GeneratedTest.objects.filter(
+            user=test.user,
+            content__topic=topic,
+            is_completed=True
+        ).exclude(id=test.id).order_by('-completed_at').first()
+        score_trend = accuracy - prev_test.score if prev_test else 0
+        
+        # 9-13: Behavioral Metrics
+        session_metrics = MonitoringCollector.aggregate_metrics(session_id)
+        engagement_score = session_metrics.get('engagement_score', 70.0)
+        active_time_ratio = session_metrics.get('active_time_ratio', 0.8)
+        
+        # Rates
+        duration_mins = max(session.study_duration_seconds / 60, 1)
+        tab_switches = session_metrics.get('tab_switches', 0)
+        tab_switch_rate = tab_switches / duration_mins
+        
+        interactions = sum(session_metrics.get('content_interactions', {}).values())
+        interaction_density = interactions / duration_mins
+        
+        # Session length deviation (Actual vs Expected)
+        # Assuming 10 mins as baseline if not specified in content
+        expected_duration = 600 
+        actual_duration = session.study_duration_seconds
+        session_length_dev = (actual_duration - expected_duration) / expected_duration
+        session_length_dev = max(-1.0, min(1.0, session_length_dev))
+        
         ml_input = {
-            'accuracy': accuracy,
-            'avg_time_per_question': avg_time,
-            'sessions_completed': sessions_completed,
-            'first_attempt_correct': first_attempt_correct,
-            'mastery_level': min(accuracy / 100, 1.0),
+            'accuracy': float(accuracy),
+            'avg_time_per_question': float(avg_time),
+            'first_attempt_correct': float(first_attempt_correct),
+            'current_difficulty': int(test.difficulty_level),
+            'sessions_completed': int(sessions_completed),
+            'score_trend': float(score_trend),
+            'mastery_level': float(min(accuracy / 100, 1.0)),
             'is_new_topic': 1 if sessions_completed <= 1 else 0,
-            'score_trend': 0,  # Will be calculated from previous sessions
-            'current_difficulty': test.difficulty_level,
-            'engagement_score': session_metrics.get('engagement_score', 50),
-            'study_speed': session_metrics.get('study_speed', 0),
-            'weak_concepts': test.weak_concepts
+            'engagement_score': float(engagement_score),
+            'active_time_ratio': float(active_time_ratio),
+            'tab_switch_rate': float(tab_switch_rate),
+            'interaction_density': float(interaction_density),
+            'session_length_dev': float(session_length_dev)
         }
         
         return ml_input

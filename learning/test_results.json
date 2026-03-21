@@ -1,0 +1,22 @@
+{
+  "youtube_transcript": {
+    "status": "PASS",
+    "transcript_length": 259401,
+    "language": "en",
+    "concepts_count": 10
+  },
+  "question_generation": {
+    "status": "PASS",
+    "mcq_count": 3,
+    "short_answer_count": 2,
+    "problem_solving_count": 2,
+    "assessment_works": true
+  },
+  "web_scraper": {
+    "status": "PASS",
+    "tutorials_count": 7,
+    "playlists_count": 3,
+    "exotic_playlists_count": 1,
+    "qa_count": 15
+  }
+}

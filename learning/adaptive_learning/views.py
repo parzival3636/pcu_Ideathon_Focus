@@ -471,17 +471,40 @@ class AssessmentViewSet(viewsets.ModelViewSet):
         assessment = self.get_object()
         question_id = request.data.get('question_id')
         selected_answer = request.data.get('selected_answer_index')
+        user_answer = request.data.get('user_answer')
         time_taken = request.data.get('time_taken_seconds')
         
         question = get_object_or_404(Question, id=question_id, assessment=assessment)
-        is_correct = selected_answer == question.correct_answer_index
         
+        is_correct = False
+        feedback = ""
+        score = 0.0
+        
+        if question.question_type == 'mcq':
+            is_correct = selected_answer == question.correct_answer_index
+            score = 100.0 if is_correct else 0.0
+        else:
+            # Open-ended assessment
+            from .question_generator import QuestionGenerator
+            generator = QuestionGenerator()
+            assessment_result = generator.assess_answer(
+                question_text=question.question_text,
+                expected_answer=question.correct_answer, # We need to make sure Question model has correct_answer
+                user_answer=user_answer
+            )
+            is_correct = assessment_result.get('is_correct', False)
+            feedback = assessment_result.get('feedback', "")
+            score = assessment_result.get('score', 0.0)
+            
         # Save answer
         answer = UserAnswer.objects.create(
             question=question,
             user=request.user,
-            selected_answer_index=selected_answer,
+            selected_answer_index=selected_answer if question.question_type == 'mcq' else None,
+            user_answer=user_answer if question.question_type != 'mcq' else None,
             is_correct=is_correct,
+            feedback=feedback,
+            score=score,
             time_taken_seconds=time_taken
         )
         
@@ -623,12 +646,12 @@ class AssessmentViewSet(viewsets.ModelViewSet):
                 from .gemini_mcq_service import create_followup_assessment
                 print(f"[Test1] Generating Test 2 immediately...")
                 test2 = create_followup_assessment(assessment.id, score_percentage=accuracy)
-                print(f"[Test1] ✅ Test 2 generated (ID: {test2.id})")
+                print(f"[Test1] [OK] Test 2 generated (ID: {test2.id})")
                 response_data['test2_id'] = test2.id
                 response_data['test2_ready'] = True
                 response_data['followup_message'] = 'Test 2 is ready! Check your dashboard.'
             except Exception as e:
-                print(f"[Test1] ⚠️ Failed to generate Test 2: {e}")
+                print(f"[Test1] [WARN] Failed to generate Test 2: {e}")
                 import traceback
                 traceback.print_exc()
                 response_data['test2_ready'] = False

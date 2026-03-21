@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Upload, Link as LinkIcon, FileText, Video, X, Plus, Zap, Send, ChevronLeft, ChevronRight, Loader2, AlertCircle, Download, ExternalLink, Clock, Coffee, CheckCircle, Play, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import api, { studySessionAPI, contentAPI } from '../services/api';
+import api, { studySessionAPI, contentAPI, chatAPI } from '../services/api';
 
 // Import PDF viewer with correct CSS paths
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -371,17 +371,40 @@ export default function TopicWindow() {
     }
   };
 
-  const handleSendMessage = () => {
-    if (chatInput.trim()) {
-      setChatMessages([...chatMessages, { id: Date.now(), text: chatInput, sender: 'user' }]);
-      setChatInput('');
-      setTimeout(() => {
-        setChatMessages(prev => [...prev, {
-          id: Date.now(),
-          text: 'This is a simulated AI response. Integration with AI coming soon!',
-          sender: 'ai'
-        }]);
-      }, 1000);
+  const handleSendMessage = async () => {
+    if (!chatInput.trim()) return;
+    const userMsg = chatInput.trim();
+    setChatMessages(prev => [...prev, { id: Date.now(), text: userMsg, sender: 'user' }]);
+    setChatInput('');
+
+    // Show typing indicator
+    const typingId = Date.now() + 1;
+    setChatMessages(prev => [...prev, { id: typingId, text: '...', sender: 'ai', isTyping: true }]);
+
+    try {
+      const response = await chatAPI.sendQuery(sessionId, userMsg);
+      const data = response.data;
+      // Remove typing indicator and add real response
+      setChatMessages(prev => [
+        ...prev.filter(m => m.id !== typingId),
+        {
+          id: Date.now() + 2,
+          text: data.response || data.fallback_response || 'I could not process that question. Please try again.',
+          sender: 'ai',
+          isFallback: data.is_fallback || false
+        }
+      ]);
+    } catch (err) {
+      console.error('Chat error:', err);
+      setChatMessages(prev => [
+        ...prev.filter(m => m.id !== typingId),
+        {
+          id: Date.now() + 2,
+          text: err.response?.data?.error || 'Failed to get a response. Please check that the session is active and try again.',
+          sender: 'ai',
+          isError: true
+        }
+      ]);
     }
   };
 

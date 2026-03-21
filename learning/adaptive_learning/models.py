@@ -109,11 +109,19 @@ class Question(models.Model):
         (3, 'Hard'),
     ]
     
+    QUESTION_TYPES = [
+        ('mcq', 'Multiple Choice Question'),
+        ('short_answer', 'Short Answer'),
+        ('problem_solving', 'Problem Solving'),
+    ]
+    
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, related_name='questions')
+    question_type = models.CharField(max_length=20, choices=QUESTION_TYPES, default='mcq')
     
     question_text = models.TextField()
-    options = models.JSONField()  # List of 4 options
-    correct_answer_index = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)])
+    options = models.JSONField(null=True, blank=True)  # List of options (for MCQ)
+    correct_answer_index = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(3)])
+    correct_answer = models.TextField(blank=True, null=True) # Text answer for open-ended
     explanation = models.TextField()
     
     difficulty = models.IntegerField(choices=DIFFICULTY_LEVELS, default=1)
@@ -133,8 +141,11 @@ class UserAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='user_answers')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    selected_answer_index = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(3)])
+    selected_answer_index = models.IntegerField(null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(3)])
+    user_answer = models.TextField(blank=True, null=True) # For open-ended
     is_correct = models.BooleanField()
+    feedback = models.TextField(blank=True, null=True) # AI feedback
+    score = models.FloatField(default=0.0) # For open-ended
     
     # Timing data
     time_taken_seconds = models.IntegerField()  # Time to answer this question
@@ -295,6 +306,8 @@ class StudySession(models.Model):
     # Status
     is_active = models.BooleanField(default=True)
     is_completed = models.BooleanField(default=False)
+    test_generation_failed = models.BooleanField(default=False)
+    test_generation_message = models.TextField(blank=True, null=True)
     
     # Camera/Proctoring
     camera_enabled = models.BooleanField(default=False)
