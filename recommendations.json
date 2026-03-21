@@ -1,0 +1,797 @@
+{
+  "javascript": {
+    "topic": "javascript",
+    "total_count": 15,
+    "recommendations": [
+      {
+        "title": "Structure and Interpretation of Computer Programs: JavaScript Edition",
+        "url": "https://books.google.com/books?hl=en&lr=&id=WSUuEAAAQBAJ&oi=fnd&pg=PR17&dq=javascript&ots=t6wazmYEol&sig=zdxFLkYHVAywUa4xsnLaRFl0Zac",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2022-01-01"
+      },
+      {
+        "title": "JavaScript: The definitive guide: Activate your web pages",
+        "url": "https://books.google.com/books?hl=en&lr=&id=6TAODdEIxrgC&oi=fnd&pg=PR7&dq=javascript&ots=ofekEUPqYG&sig=232xFO90NpWU0oIzBeWQ_zzfqWE",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2011-01-01"
+      },
+      {
+        "title": "JavaScript: The Good Parts: The Good Parts",
+        "url": "https://books.google.com/books?hl=en&lr=&id=PXa2bby0oQ0C&oi=fnd&pg=PR7&dq=javascript&ots=HMslm8t_lG&sig=Hn_AbscxHZShdNWA2eYqishHLkQ",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6321672289129547,
+        "publication_date": "2008-01-01"
+      },
+      {
+        "title": "Type analysis for JavaScript",
+        "url": "https://link.springer.com/chapter/10.1007/978-3-642-03237-0_17",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6157512802224266,
+        "publication_date": "2009-01-01"
+      },
+      {
+        "title": "An analysis of the dynamic behavior of JavaScript programs",
+        "url": "https://dl.acm.org/doi/abs/10.1145/1806596.1806598",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6102234674992922,
+        "publication_date": "2010-01-01"
+      },
+      {
+        "title": "JavaScript Fundamentals: A Beginner's Guide to the Web's Essential ...",
+        "url": "https://medium.com/@ehuerikenbaba/javascript-fundamentals-a-beginners-guide-to-the-web-s-essential-language-79d3274d5904",
+        "source": "medium.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4945146018708647,
+        "publication_date": "2025-04-05"
+      },
+      {
+        "title": "JavaScript Guide - MDN Web Docs - Mozilla",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+        "source": "developer.mozilla.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2025-11-07"
+      },
+      {
+        "title": "JavaScript Tutorial - GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/javascript/javascript-tutorial/",
+        "source": "geeksforgeeks.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2026-03-13"
+      },
+      {
+        "title": "A Complete Guide to Beginning with JavaScript - Frontend Masters",
+        "url": "https://frontendmasters.com/blog/a-complete-guide-to-beginning-with-javascript/",
+        "source": "frontendmasters.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.3896549167237053,
+        "publication_date": "2024-09-04"
+      },
+      {
+        "title": "How to Learn JavaScript: Your Step-by-Step Guide for Beginners",
+        "url": "https://blog.jetbrains.com/webstorm/2024/07/how-to-learn-javascript/",
+        "source": "blog.jetbrains.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.3885825918320785,
+        "publication_date": "2024-07-19"
+      },
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "url": "https://javascript.info/",
+        "source": "javascript.info",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "JavaScript Tutorial",
+        "url": "https://www.javascripttutorial.net/",
+        "source": "javascripttutorial.net",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Beginner JavaScript Notes & Reference - Wes Bos",
+        "url": "https://wesbos.com/javascript",
+        "source": "wesbos.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "JavaScript Tutorial: Learn the Basics - Udemy Blog",
+        "url": "https://blog.udemy.com/javascript-tutorial-learn-the-basics/",
+        "source": "blog.udemy.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Beginner-friendly guide to understanding JavaScript - Microverse",
+        "url": "https://www.microverse.org/blog/introduction-to-javascript-a-guide-for-beginners",
+        "source": "microverse.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.36750000000000005,
+        "publication_date": "2022-12-27"
+      }
+    ]
+  },
+  "deep learning": {
+    "topic": "deep learning",
+    "total_count": 17,
+    "recommendations": [
+      {
+        "title": "Deep learning",
+        "url": "https://link.springer.com/chapter/10.1007/978-981-95-1184-6_16",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6800000000000002,
+        "publication_date": "2026-01-01"
+      },
+      {
+        "title": "Deep learning",
+        "url": "https://www.nature.com/articles/nature14539",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2015-01-01"
+      },
+      {
+        "title": "Deep learning",
+        "url": "https://synapse.koreamed.org/pdf/10.4258/hir.2016.22.4.351",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2016-01-01"
+      },
+      {
+        "title": "Deep learning",
+        "url": "https://www.academia.edu/download/62266271/Deep_Learning20200303-80130-1s42zvt.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2017-01-01"
+      },
+      {
+        "title": "A review of machine learning and deep learning applications",
+        "url": "https://ieeexplore.ieee.org/abstract/document/8697857/",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2018-01-01"
+      },
+      {
+        "title": "Deep learning",
+        "url": "https://books.google.com/books?hl=en&lr=&id=b06qDwAAQBAJ&oi=fnd&pg=PR7&dq=deep+learning&ots=_pGWPPlS-S&sig=wIcCRs647FClhSNBxZH1pmzBqyE",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6353962928879778,
+        "publication_date": "2019-01-01"
+      },
+      {
+        "title": "Deep learning techniques: an overview",
+        "url": "https://link.springer.com/chapter/10.1007/978-981-15-3383-9_54",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6235423007539843,
+        "publication_date": "2020-01-01"
+      },
+      {
+        "title": "The Complete Beginners Guide to Deep Learning - Medium",
+        "url": "https://medium.com/data-science/intro-to-deep-learning-c025efd92535",
+        "source": "medium.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4675,
+        "publication_date": "2019-01-13"
+      },
+      {
+        "title": "Deep Learning Tutorial - GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/deep-learning/deep-learning-tutorial/",
+        "source": "geeksforgeeks.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2026-03-09"
+      },
+      {
+        "title": "Machine Learning & Deep Learning Mastery Guide for Beginners",
+        "url": "https://huggingface.co/blog/info5ec/ml-dl-mastery-guide",
+        "source": "huggingface.co",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2025-11-15"
+      },
+      {
+        "title": "Deep Learning Guide for Beginners Step-by-Step Learning Path",
+        "url": "https://www.gradus.live/blog/deep-learning-guide-for-beginners-step-by-step-learning-path",
+        "source": "gradus.live",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2026-01-14"
+      },
+      {
+        "title": "A Beginner Friendly Walkthrough of Deep Learning by Goodfellow",
+        "url": "https://www.reddit.com/r/learnmachinelearning/comments/1lr1rgl/a_beginner_friendly_walkthrough_of_deep_learning/",
+        "source": "reddit.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.3965451745379877,
+        "publication_date": "2025-07-03"
+      },
+      {
+        "title": "What is Deep Learning? A Tutorial for Beginners - DataCamp",
+        "url": "https://www.datacamp.com/tutorial/tutorial-deep-learning-tutorial",
+        "source": "datacamp.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Deep Learning Tutorial for Beginners (Updated 2026) - igmGuru",
+        "url": "https://www.igmguru.com/blog/deep-learning-tutorial",
+        "source": "igmguru.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Deep Learning 101: Introduction [Pros, Cons & Uses] - V7 Labs",
+        "url": "https://www.v7labs.com/blog/deep-learning-guide",
+        "source": "v7labs.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Deep Learning Tutorial for Beginners - Kaggle",
+        "url": "https://www.kaggle.com/code/kanncaa1/deep-learning-tutorial-for-beginners",
+        "source": "kaggle.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "A beginner's guide to neural networks and deep learning",
+        "url": "https://www.superannotate.com/blog/guide-to-neural-networks-and-deep-learning",
+        "source": "superannotate.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.36750000000000005,
+        "publication_date": "2021-12-21"
+      }
+    ]
+  },
+  "aws": {
+    "topic": "aws",
+    "total_count": 20,
+    "recommendations": [
+      {
+        "title": "Amazon Web Services in Action: An in-depth guide to AWS",
+        "url": "https://books.google.com/books?hl=en&lr=&id=joK3EAAAQBAJ&oi=fnd&pg=PA1&dq=aws&ots=DsTmPwatwT&sig=uDeLDElhgIuPKkGWs-rQ9GkwOFI",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.562073841921732,
+        "publication_date": "2023-01-01"
+      },
+      {
+        "title": "A review on amazon web service (aws), microsoft azure & google cloud platform (gcp) services",
+        "url": "https://www.researchgate.net/profile/Tabish-Mufti/publication/350126601_A_Review_on_Amazon_Web_Service_AWS_Microsoft_Azure_Google_Cloud_Platform_GCP_Services/links/605391e2a6fdccbfeaed8ff9/A-Review-on-Amazon-Web-Service-AWS-Microsoft-Azure-Google-Cloud-Platform-GCP-Services.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.5388401478905503,
+        "publication_date": "2021-01-01"
+      },
+      {
+        "title": "Serverless architectures on AWS: with examples using Aws Lambda",
+        "url": "https://books.google.com/books?hl=en&lr=&id=ZDszEAAAQBAJ&oi=fnd&pg=PT20&dq=aws&ots=exoK3E488X&sig=pZHeQXy72WsM5TLk0Km2UXqooAY",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.5388401478905503,
+        "publication_date": "2017-01-01"
+      },
+      {
+        "title": "Exploring the cloud from passive measurements: The Amazon AWS case",
+        "url": "https://ieeexplore.ieee.org/abstract/document/6566769/",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.5231410658323826,
+        "publication_date": "2013-01-01"
+      },
+      {
+        "title": "Complete AWS Tutorial: Step-by-Step Guide to Amazon Web Services",
+        "url": "https://medium.com/@tpointtechblog/complete-aws-tutorial-step-by-step-guide-to-amazon-web-services-39bf5601fc0a",
+        "source": "medium.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.5025000000000001,
+        "publication_date": "2025-09-24"
+      },
+      {
+        "title": "AWS cloud computing solutions: optimizing implementation for businesses",
+        "url": "http://scir.wum.edu.pk/index.php/ojs/article/view/138",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.49014440820937255,
+        "publication_date": "2023-01-01"
+      },
+      {
+        "title": "A review on AWS-cloud computing technology",
+        "url": "https://www.academia.edu/download/78931904/A_Review_on_AWS_Cloud_Computing_Technology.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.4737673449004983,
+        "publication_date": "2022-01-01"
+      },
+      {
+        "title": "Learning Amazon Web Services (AWS): A hands-on guide to the fundamentals of AWS Cloud",
+        "url": "https://books.google.com/books?hl=en&lr=&id=HvifDwAAQBAJ&oi=fnd&pg=PT25&dq=aws&ots=-2jfN_q8P_&sig=xSaMfupcTgCU3km4-ZEY_dH17l0",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.4358208915373317,
+        "publication_date": "2019-01-01"
+      },
+      {
+        "title": "Practical machine learning with AWS",
+        "url": "https://link.springer.com/content/pdf/10.1007/978-1-4842-6222-1.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.41547581355656604,
+        "publication_date": "2021-01-01"
+      },
+      {
+        "title": "Amazon Web Services (AWS) Tutorial - GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/devops/aws-tutorial/",
+        "source": "geeksforgeeks.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2026-02-04"
+      },
+      {
+        "title": "AWS Tutorial: Introduction to Amazon Web Services - Edureka",
+        "url": "https://www.edureka.co/blog/amazon-aws-tutorial/",
+        "source": "edureka.co",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.39588352726443077,
+        "publication_date": "2025-06-04"
+      },
+      {
+        "title": "AWS",
+        "url": "https://d1.awsstatic.com/solutions/guidance/architecture-diagrams/okta-phone-based-multi-factor-authentication-on-aws.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.3935042928512087,
+        "publication_date": "2019-01-01"
+      },
+      {
+        "title": "Absolute beginners guide to starting on AWS and working way up to ...",
+        "url": "https://www.reddit.com/r/AWSCertifications/comments/1it2onf/absolute_beginners_guide_to_starting_on_aws_and/",
+        "source": "reddit.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.3934879078256902,
+        "publication_date": "2025-02-19"
+      },
+      {
+        "title": "How to Learn AWS From Scratch in 2026: The Complete Guide",
+        "url": "https://www.datacamp.com/blog/learn-aws",
+        "source": "datacamp.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.3915714122746977,
+        "publication_date": "2024-11-27"
+      },
+      {
+        "title": "AWS Tutorial for Beginners Step by Step: Core Concepts",
+        "url": "https://awsforengineers.com/blog/aws-tutorial-for-beginners-step-by-step-core-concepts/",
+        "source": "awsforengineers.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.38399669176363227,
+        "publication_date": "2023-12-31"
+      },
+      {
+        "title": "Getting Started - Cloud Computing Tutorials for Building on AWS",
+        "url": "https://aws.amazon.com/getting-started/",
+        "source": "aws.amazon.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Hands-On Tutorials for Amazon Web Services (AWS)",
+        "url": "https://aws.amazon.com/getting-started/hands-on/",
+        "source": "aws.amazon.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "AWS Fundamentals Blog - Learn AWS concepts and best practices",
+        "url": "https://awsfundamentals.com/blog",
+        "source": "awsfundamentals.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "AWS Blogs - Cloud news & innovation | Amazon Web Services (AWS)",
+        "url": "https://aws.amazon.com/blogs/",
+        "source": "aws.amazon.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "An overview of AWS",
+        "url": "https://ijsrmst.com/index.php/ijsrmst/article/view/223",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.3741829443018278,
+        "publication_date": "2024-01-01"
+      }
+    ]
+  },
+  "nodejs": {
+    "topic": "nodejs",
+    "total_count": 20,
+    "recommendations": [
+      {
+        "title": "Professional Node. js: Building Javascript based scalable software",
+        "url": "https://books.google.com/books?hl=en&lr=&id=ZH6bpbcrlvYC&oi=fnd&pg=PR27&dq=nodejs&ots=mQGs7CokQ9&sig=tDm7tnl0SCFXa0eCLU2PlwnB6Ik",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.5306939689279164,
+        "publication_date": "2012-01-01"
+      },
+      {
+        "title": "Node. js challenges in implementation",
+        "url": "https://www.researchgate.net/profile/Hezbullah-Shah/publication/318310544_Nodejs_Challenges_in_Implementation/links/59634e42458515a3575451a6/Nodejs-Challenges-in-Implementation.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.5110461977253764,
+        "publication_date": "2017-01-01"
+      },
+      {
+        "title": "How to build a blog with NodeJS - DEV Community",
+        "url": "https://dev.to/itzami/how-to-build-a-blog-with-nodejs-3n5c",
+        "source": "dev.to",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.49095539584759296,
+        "publication_date": "2024-10-31"
+      },
+      {
+        "title": "Node. js, MongoDB, and AngularJS web development",
+        "url": "https://books.google.com/books?hl=en&lr=&id=8kTCAwAAQBAJ&oi=fnd&pg=PR6&dq=nodejs&ots=Hi9jd4RAhC&sig=AOqlpFhRL_kmDjOx8rfz910G594",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.485789156147869,
+        "publication_date": "2014-01-01"
+      },
+      {
+        "title": "Web development with MongoDB and NodeJs",
+        "url": "https://books.google.com/books?hl=en&lr=&id=4QKACwAAQBAJ&oi=fnd&pg=PP1&dq=nodejs&ots=SeYANOsfwA&sig=OIkJaTSPtLoUg13g6GzUxd03vCU",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.484877364806524,
+        "publication_date": "2015-01-01"
+      },
+      {
+        "title": "Creating a blogging app with Node.js, MongoDB, and ExpressJS",
+        "url": "https://medium.com/@joshhargett.jh/creating-a-blogging-app-with-node-js-mongodb-and-expressjs-5e0aabc80583",
+        "source": "medium.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.48182922655715266,
+        "publication_date": "2023-09-27"
+      },
+      {
+        "title": "Aplicações web real-time com Node. js",
+        "url": "https://books.google.com/books?hl=en&lr=&id=Wm-CCwAAQBAJ&oi=fnd&pg=PT7&dq=nodejs&ots=_fs-ZrBkiM&sig=lNKZqZQwTh3EUmnKzsp7Nc4r0Z4",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.4714965615592972,
+        "publication_date": "2014-01-01"
+      },
+      {
+        "title": "A comparative analysis of node. js (server-side javascript)",
+        "url": "https://repository.stcloudstate.edu/csit_etds/5/",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.4653964454588807,
+        "publication_date": "2016-01-01"
+      },
+      {
+        "title": "Benefits and Challenges of Using NodeJS",
+        "url": "https://www.academia.edu/download/94804092/ijircst.2022.10.3.pdf",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.4491676474130516,
+        "publication_date": "2022-01-01"
+      },
+      {
+        "title": "How Node.js Works: A Comprehensive Guide in 2025 - NodeSource",
+        "url": "http://nodesource.com/blog/how-nodejs-works/",
+        "source": "nodesource.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.392985968514716,
+        "publication_date": "2025-01-28"
+      },
+      {
+        "title": "Node Hero - Getting Started With Node.js Tutorial",
+        "url": "https://blog.risingstack.com/node-hero-tutorial-getting-started-with-node-js/",
+        "source": "blog.risingstack.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.38741900524754735,
+        "publication_date": "2024-05-29"
+      },
+      {
+        "title": "Construindo aplicações com NodeJS–4a edição",
+        "url": "https://books.google.com/books?hl=en&lr=&id=kbTlEAAAQBAJ&oi=fnd&pg=PT4&dq=nodejs&ots=PSNZ6y0W_Y&sig=lhkzqYNH7CMqQaJmzZB6U22RLsE",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.3838322700338219,
+        "publication_date": "2023-01-01"
+      },
+      {
+        "title": "Comparative analysis of Node. js frameworks",
+        "url": "https://ph.pollub.pl/index.php/jcsi/article/view/5364",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.3819140852607928,
+        "publication_date": "2024-01-01"
+      },
+      {
+        "title": "The Absolute Beginner's Guide to Node.js - CloudBees",
+        "url": "https://www.cloudbees.com/blog/node-js-tutorial",
+        "source": "cloudbees.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Introduction to Node.js",
+        "url": "https://nodejs.org/en/learn/getting-started/introduction-to-nodejs",
+        "source": "nodejs.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Node.js — Blog",
+        "url": "https://nodejs.org/en/blog",
+        "source": "nodejs.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "[PDF] The Complete Node.js Dev Course - Anurag Kapur",
+        "url": "https://www.anuragkapur.com/assets/blog/programming/node/PDF-Guide-Node-Andrew-Mead-v3.pdf",
+        "source": "anuragkapur.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Node.js Tutorial - Udemy Blog",
+        "url": "https://blog.udemy.com/node-js-tutorial/",
+        "source": "blog.udemy.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Node.js Project Structure Tutorial - Reddit",
+        "url": "https://www.reddit.com/r/node/comments/4iow8q/nodejs_project_structure_tutorial/",
+        "source": "reddit.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.36750000000000005,
+        "publication_date": "2016-05-10"
+      },
+      {
+        "title": "Nodejs",
+        "url": "https://refaqi.faqi.edu.br/index.php/refaqi/article/view/104",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.30860696384577724,
+        "publication_date": "2018-01-01"
+      }
+    ]
+  },
+  "cybersecurity": {
+    "topic": "cybersecurity",
+    "total_count": 13,
+    "recommendations": [
+      {
+        "title": "Cybersecurity data science: an overview from machine learning perspective",
+        "url": "https://link.springer.com/article/10.1186/s40537-020-00318-5",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2020-01-01"
+      },
+      {
+        "title": "A survey of emerging threats in cybersecurity",
+        "url": "https://www.sciencedirect.com/science/article/pii/S0022000014000178",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6450000000000001,
+        "publication_date": "2014-01-01"
+      },
+      {
+        "title": "Defining cybersecurity",
+        "url": "https://www.timreview.ca/article/835",
+        "source": "Unknown",
+        "author": null,
+        "content_type": "paper",
+        "quality_score": 0.6381951085054616,
+        "publication_date": "2014-01-01"
+      },
+      {
+        "title": "Cybersecurity Tutorial: Your Complete Step-by-Step Guide",
+        "url": "https://dev.to/ankita_singh_hob/cybersecurity-tutorial-your-complete-step-by-step-guide-52jo",
+        "source": "dev.to",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.49759468400638834,
+        "publication_date": "2025-08-18"
+      },
+      {
+        "title": "An In-Depth Guide to Personal Cybersecurity | by Nick Rosener",
+        "url": "https://medium.com/@nickrosener/an-in-depth-guide-to-personal-cybersecurity-be98ba47c968",
+        "source": "medium.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4675,
+        "publication_date": "2017-07-08"
+      },
+      {
+        "title": "Cyber Security Tutorial - GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/ethical-hacking/cyber-security-tutorial/",
+        "source": "geeksforgeeks.org",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.4025,
+        "publication_date": "2026-03-13"
+      },
+      {
+        "title": "How To Create A Cybersecurity Blog - YouTube",
+        "url": "https://www.youtube.com/watch?v=X7GKKjgJcf4",
+        "source": "youtube.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.39795973077800595,
+        "publication_date": "2025-09-03"
+      },
+      {
+        "title": "A comprehensive guide to cyber security protocols and best practices",
+        "url": "https://www.dataguard.com/blog/cyber-security-protocols-and-best-practices/",
+        "source": "dataguard.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.38983744010951404,
+        "publication_date": "2024-09-12"
+      },
+      {
+        "title": "How to Write an Effective Cybersecurity Blog: A Beginner's Guide",
+        "url": "https://www.beyondtrust.com/blog/entry/how-to-write-a-cybersecurity-blog",
+        "source": "beyondtrust.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.3881034679443304,
+        "publication_date": "2024-06-28"
+      },
+      {
+        "title": "Cyber Security Tutorial: A Complete Roadmap [Updated 2026]",
+        "url": "https://www.igmguru.com/blog/cyber-security-tutorial",
+        "source": "igmguru.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "What is Cyber Security? A Beginner's Guide - Udemy Blog",
+        "url": "https://blog.udemy.com/what-is-cyber-security-a-beginners-guide/",
+        "source": "blog.udemy.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Cybersecurity Articles - Codecademy",
+        "url": "https://www.codecademy.com/articles/subject/cybersecurity",
+        "source": "codecademy.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.37750000000000006,
+        "publication_date": null
+      },
+      {
+        "title": "Cybersecurity - A Beginner's Guide - StorMagic",
+        "url": "https://stormagic.com/resources/beginners-guides/cybersecurity-beginners-guide/",
+        "source": "stormagic.com",
+        "author": null,
+        "content_type": "blog",
+        "quality_score": 0.36750000000000005,
+        "publication_date": "2021-03-05"
+      }
+    ]
+  }
+}
