@@ -158,13 +158,20 @@ function ensureMLReady() {
 function applyGoalRelevance(result, extractedContent, sessionGoal, hostname) {
   if (!sessionGoal || !result) return result;
 
-  const goalRelevance = computeGoalRelevance(extractedContent, sessionGoal);
+  const { score: goalRelevance, expandedMatchCount, hasExpansion } = computeGoalRelevance(extractedContent, sessionGoal);
 
-  // HIGH goal relevance: content directly matches session topic → productive
-  // e.g., watching "Normalization in DBMS" when goal is "database"
-  if (goalRelevance >= 0.25) {
+  // Determine if content is specifically about the session topic.
+  // When expansion is available, require specific expanded-term matches (e.g., "dfd", "automata")
+  // not just generic original words (e.g., "theory" appears on ANY educational page).
+  const hasSpecificTopicMatch = !hasExpansion || expandedMatchCount >= 2;
+  const hasPartialTopicMatch = !hasExpansion || expandedMatchCount >= 1;
+
+  // HIGH goal relevance + specific topic matches: content matches session topic → productive
+  // e.g., watching "DFD tutorial" when goal is "theory of computation"
+  // (expanded terms "dfd" matches → hasSpecificTopicMatch = true)
+  if (goalRelevance >= 0.15 && hasSpecificTopicMatch) {
     if (result.category !== 'productive') {
-      console.log(`[MindForge] 🎯 Goal-boost: ${result.category} → productive (relevance: ${goalRelevance.toFixed(2)}, goal: "${sessionGoal}") for ${hostname}`);
+      console.log(`[MindForge] 🎯 Goal-boost: ${result.category} → productive (relevance: ${goalRelevance.toFixed(2)}, expandedHits: ${expandedMatchCount}, goal: "${sessionGoal}") for ${hostname}`);
       return {
         ...result,
         category: 'productive',
@@ -173,13 +180,39 @@ function applyGoalRelevance(result, extractedContent, sessionGoal, hostname) {
         method: result.method + '+goal-boost',
       };
     }
-    return result; // Already productive — keep it
+    return result; // Already productive + confirmed on-topic → keep it
   }
 
-  // LOW goal relevance + ML says productive → educational but NOT session-related → neutral
-  // e.g., watching "ML tutorial" when goal is "database" — it's learning, but off-topic
-  if (goalRelevance < 0.1 && result.category === 'productive') {
-    console.log(`[MindForge] 📚 Goal-demote: productive → neutral (not related to "${sessionGoal}", relevance: ${goalRelevance.toFixed(2)}) for ${hostname}`);
+  // MODERATE: some topic overlap, rescue distraction to neutral
+  // e.g., content has at least 1 expanded term but not enough for full boost
+  if (goalRelevance >= 0.08 && hasPartialTopicMatch && result.category === 'distraction') {
+    console.log(`[MindForge] 🔄 Goal-rescue: distraction → neutral (partial relevance: ${goalRelevance.toFixed(2)}, expandedHits: ${expandedMatchCount}, goal: "${sessionGoal}") for ${hostname}`);
+    return {
+      ...result,
+      category: 'neutral',
+      confidence: 0.5,
+      label: `Partially related to "${sessionGoal}" — not blocking`,
+      method: result.method + '+goal-rescue',
+    };
+  }
+
+  // ML says productive BUT content doesn't match session topic → demote to neutral
+  // This catches: GFG "OS fundamentals" when goal is "theory of computation"
+  // (generic "theory" matches but NO expanded terms like "automata"/"dfd" match)
+  if (result.category === 'productive' && !hasSpecificTopicMatch) {
+    console.log(`[MindForge] 📚 Goal-demote: productive → neutral (generic match only, expandedHits: ${expandedMatchCount}, relevance: ${goalRelevance.toFixed(2)}, goal: "${sessionGoal}") for ${hostname}`);
+    return {
+      ...result,
+      category: 'neutral',
+      confidence: 0.5,
+      label: `Educational but not specifically about "${sessionGoal}"`,
+      method: result.method + '+goal-demote',
+    };
+  }
+
+  // Low relevance + productive → also demote (no expansion case, or very low score)
+  if (goalRelevance < 0.08 && result.category === 'productive') {
+    console.log(`[MindForge] 📚 Goal-demote: productive → neutral (low relevance: ${goalRelevance.toFixed(2)}, goal: "${sessionGoal}") for ${hostname}`);
     return {
       ...result,
       category: 'neutral',

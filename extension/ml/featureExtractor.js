@@ -124,19 +124,145 @@ export function computeGoalSimilarity(goalText, pageText) {
   return matches / goalTokens.size;
 }
 
+// ─── Abbreviation / Synonym Expansion Map ───
+// Maps common short session goal names to their full forms and related keywords.
+// This allows "toc" to match content about "theory of computation", "DFD", etc.
+const GOAL_EXPANSIONS = {
+  // Theory of Computation
+  'toc': 'theory of computation automata formal languages grammar turing machine dfa nfa dfd pushdown regular expression context free chomsky pumping lemma decidability complexity finite state computability',
+  'theory of computation': 'toc automata formal languages grammar turing machine dfa nfa dfd pushdown regular expression context free chomsky pumping lemma decidability',
+
+  // Data Structures & Algorithms
+  'dsa': 'data structures algorithms arrays linked list tree graph stack queue heap hash table sorting searching dynamic programming greedy recursion binary search',
+  'data structures': 'dsa algorithms arrays linked list tree graph stack queue heap hash table sorting binary search',
+  'algorithms': 'dsa data structures sorting searching dynamic programming greedy recursion complexity analysis',
+
+  // Operating Systems
+  'os': 'operating system operating systems processes threads scheduling memory management kernel deadlock paging virtual memory file system semaphore mutex process synchronization',
+  'operating system': 'os processes threads scheduling memory management kernel deadlock paging virtual memory semaphore',
+  'operating systems': 'os processes threads scheduling memory management kernel deadlock paging virtual memory semaphore',
+
+  // Database Management Systems
+  'dbms': 'database management system sql normalization relational algebra transaction query optimization indexing er diagram entity relationship schema',
+  'database': 'dbms sql normalization relational transaction query indexing schema entity relationship',
+  'sql': 'database dbms query relational table join select insert update normalization',
+
+  // Computer Networks
+  'cn': 'computer networks networking tcp udp ip osi model routing protocol http dns socket subnet gateway firewall layer transport network',
+  'computer networks': 'cn networking tcp udp ip osi model routing protocol http dns socket subnet',
+  'networking': 'cn computer networks tcp udp ip osi routing protocol http dns',
+
+  // Object Oriented Programming
+  'oops': 'object oriented programming classes inheritance polymorphism encapsulation abstraction interface method overloading overriding constructor',
+  'oop': 'object oriented programming classes inheritance polymorphism encapsulation abstraction interface method overloading overriding constructor',
+  'object oriented': 'oop oops classes inheritance polymorphism encapsulation abstraction',
+
+  // Machine Learning & AI
+  'ml': 'machine learning supervised unsupervised regression classification clustering neural network deep learning training model prediction feature',
+  'machine learning': 'ml supervised unsupervised regression classification clustering neural network deep learning training',
+  'ai': 'artificial intelligence machine learning deep learning neural network natural language processing computer vision nlp reinforcement learning',
+  'artificial intelligence': 'ai machine learning deep learning neural network nlp computer vision',
+  'dl': 'deep learning neural network convolutional recurrent transformer attention backpropagation gradient descent',
+  'deep learning': 'dl neural network cnn rnn transformer attention mechanism backpropagation',
+
+  // Compiler Design
+  'cd': 'compiler design lexical analysis parsing syntax semantic code generation optimization grammar automata regular expression',
+  'compiler': 'compiler design lexical analysis parsing syntax directed translation code generation optimization',
+  'compiler design': 'cd lexical analysis parsing syntax semantic code generation optimization grammar',
+
+  // Software Engineering
+  'se': 'software engineering sdlc agile waterfall testing requirements design patterns uml use case',
+  'software engineering': 'se sdlc agile waterfall testing requirements design patterns uml',
+
+  // Discrete Mathematics
+  'dm': 'discrete mathematics logic propositional predicate sets relations functions graph theory combinatorics probability',
+  'discrete math': 'dm logic propositional predicate sets relations functions graph theory combinatorics',
+  'discrete mathematics': 'dm logic propositional predicate sets relations functions graph theory combinatorics',
+
+  // Digital Logic / Electronics
+  'dld': 'digital logic design boolean algebra gates flip flop counter register combinational sequential circuit multiplexer decoder',
+  'digital logic': 'dld boolean algebra gates flip flop counter register combinational sequential circuit',
+
+  // Computer Architecture
+  'coa': 'computer organization architecture cpu pipeline cache memory instruction set addressing mode register alu',
+  'computer architecture': 'coa cpu pipeline cache memory instruction set addressing mode register',
+
+  // Web Development
+  'web dev': 'web development html css javascript react nodejs frontend backend api rest http server client',
+  'web development': 'html css javascript react nodejs angular vue frontend backend api rest http',
+  'frontend': 'html css javascript react angular vue dom component ui ux responsive layout',
+  'backend': 'server api rest nodejs express django flask database sql mongodb authentication routing middleware',
+
+  // Mathematics
+  'math': 'mathematics calculus algebra trigonometry geometry statistics probability linear algebra differential integral',
+  'maths': 'mathematics calculus algebra trigonometry geometry statistics probability linear algebra differential integral',
+  'calculus': 'mathematics differential integral limits derivatives continuity functions series sequences',
+  'linear algebra': 'matrices vectors eigenvalues determinants spaces transformations rank',
+
+  // Physics
+  'physics': 'mechanics thermodynamics electromagnetism optics quantum waves motion force energy momentum',
+
+  // Chemistry
+  'chemistry': 'organic inorganic physical chemical reactions bonds molecules atoms periodic table equilibrium',
+};
+
 /**
- * Compute goal relevance using fuzzy matching.
+ * Expand a goal text using the abbreviation map.
+ * Returns { originalWords: string[], expandedWords: string[] }
+ * expandedWords are the ADDITIONAL terms not in the original.
+ */
+function expandGoalText(goalText) {
+  const normalized = goalText.toLowerCase().trim();
+  const originalWords = normalized
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter(w => w.length > 1); // Allow 2-char words for abbreviations like "os", "ml", "ai"
+
+  const expandedWords = [];
+
+  // Check the full goal text first (e.g., "theory of computation")
+  if (GOAL_EXPANSIONS[normalized]) {
+    const terms = GOAL_EXPANSIONS[normalized].split(/\s+/).filter(w => w.length > 1);
+    expandedWords.push(...terms);
+  }
+
+  // Check each individual word (e.g., "toc" from "toc study")
+  for (const word of originalWords) {
+    if (GOAL_EXPANSIONS[word]) {
+      const terms = GOAL_EXPANSIONS[word].split(/\s+/).filter(w => w.length > 1);
+      expandedWords.push(...terms);
+    }
+  }
+
+  // Check multi-word combinations (e.g., "data structures" from "data structures and algorithms")
+  const fullText = originalWords.join(' ');
+  for (const key of Object.keys(GOAL_EXPANSIONS)) {
+    if (key.includes(' ') && fullText.includes(key)) {
+      const terms = GOAL_EXPANSIONS[key].split(/\s+/).filter(w => w.length > 1);
+      expandedWords.push(...terms);
+    }
+  }
+
+  // Deduplicate expanded words and remove any that are already in original
+  const origSet = new Set(originalWords);
+  const uniqueExpanded = [...new Set(expandedWords)].filter(w => !origSet.has(w));
+
+  return { originalWords, expandedWords: uniqueExpanded };
+}
+
+/**
+ * Compute goal relevance using fuzzy matching + abbreviation expansion.
  * More aggressive than computeGoalSimilarity — uses substring, prefix,
- * and cross-word matching to catch abbreviations and word variants.
+ * cross-word matching, AND synonym expansion to catch abbreviations.
  * 
  * Used by the goal-relevance adjustment stage in the classifier.
  *
  * @param {Object} extractedContent — { title, url, hostname, content }
  * @param {string} goalText — Session goal text
- * @returns {number} — 0 to 1 relevance score
+ * @returns {{ score: number, expandedMatchCount: number, hasExpansion: boolean }}
  */
 export function computeGoalRelevance(extractedContent, goalText) {
-  if (!goalText) return 0;
+  if (!goalText) return { score: 0, expandedMatchCount: 0, hasExpansion: false };
 
   const title = (extractedContent.title || '').toLowerCase();
   const content = (extractedContent.content || '').toLowerCase();
@@ -144,12 +270,13 @@ export function computeGoalRelevance(extractedContent, goalText) {
   // Title gets double weight — it's the strongest topical indicator
   const allText = [title, title, content, url].join(' ');
 
-  const goalWords = goalText.toLowerCase()
-    .replace(/[^a-z0-9\s]/g, ' ')
-    .split(/\s+/)
-    .filter(w => w.length > 2);
+  // ── Expand goal text using abbreviation map ──
+  const { originalWords, expandedWords } = expandGoalText(goalText);
 
-  if (goalWords.length === 0) return 0;
+  // Filter original words: only use words > 2 chars for matching (but expansion already happened)
+  const goalWordsForMatch = originalWords.filter(w => w.length > 2);
+
+  if (goalWordsForMatch.length === 0 && expandedWords.length === 0) return 0;
 
   const contentTokens = allText
     .replace(/[^a-z0-9\s]/g, ' ')
@@ -158,8 +285,12 @@ export function computeGoalRelevance(extractedContent, goalText) {
   const contentWordSet = new Set(contentTokens);
 
   let totalScore = 0;
+  let totalWeight = 0;
 
-  for (const goalWord of goalWords) {
+  // ── Score original goal words (weight: 1.0 each) ──
+  for (const goalWord of goalWordsForMatch) {
+    totalWeight += 1.0;
+
     // 1. Exact match (strongest signal)
     if (contentWordSet.has(goalWord)) {
       totalScore += 1.0;
@@ -188,7 +319,55 @@ export function computeGoalRelevance(extractedContent, goalText) {
     totalScore += bestPartial;
   }
 
-  return totalScore / goalWords.length;
+  // ── Score expanded words (weight: 0.7 each — slightly lower to avoid over-boosting) ──
+  // Only count up to the top N matches to avoid one big expansion dominating
+  const EXPANDED_WEIGHT = 0.7;
+  const MAX_EXPANDED_MATCHES = 8; // Cap how many expanded terms contribute
+  let expandedMatches = 0;
+
+  for (const ew of expandedWords) {
+    if (ew.length < 3) continue; // Skip very short expanded terms
+    if (expandedMatches >= MAX_EXPANDED_MATCHES) break;
+
+    let matchScore = 0;
+
+    // Exact match
+    if (contentWordSet.has(ew)) {
+      matchScore = 1.0;
+    } else {
+      // Fuzzy: content word contains expanded word or vice versa
+      for (const cw of contentWordSet) {
+        if (cw.length > ew.length && cw.includes(ew) && ew.length >= 3) {
+          matchScore = Math.max(matchScore, 0.7);
+        }
+        if (ew.length > cw.length && ew.includes(cw) && cw.length >= 4) {
+          matchScore = Math.max(matchScore, 0.5);
+        }
+        if (ew.length >= 4 && cw.length >= 4) {
+          const prefixLen = Math.min(5, Math.min(ew.length, cw.length));
+          if (ew.substring(0, prefixLen) === cw.substring(0, prefixLen)) {
+            matchScore = Math.max(matchScore, 0.4);
+          }
+        }
+      }
+    }
+
+    if (matchScore > 0) {
+      totalScore += matchScore * EXPANDED_WEIGHT;
+      totalWeight += EXPANDED_WEIGHT;
+      expandedMatches++;
+    }
+  }
+
+  // If we only have expanded words (e.g., goal is "toc" which is ≤2 chars after filtering),
+  // use expanded weight as the denominator
+  if (totalWeight === 0) return { score: 0, expandedMatchCount: 0, hasExpansion: expandedWords.length > 0 };
+
+  return {
+    score: totalScore / totalWeight,
+    expandedMatchCount: expandedMatches,
+    hasExpansion: expandedWords.length > 0,
+  };
 }
 
 /**

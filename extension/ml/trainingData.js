@@ -63,6 +63,18 @@ export const TRAINING_DATA = [
   { url: 'youtube.com/watch?v=edu8', title: 'Deep Learning Specialization Explained', snippet: 'deep learning neural network convolutional recurrent natural language processing computer vision training', category: 'productive', contentType: 'video' },
 
   // ═══════════════════════════════════════
+  //  PRODUCTIVE — YouTube CS Theory & Academic Lectures
+  // ═══════════════════════════════════════
+  { url: 'youtube.com/watch?v=toc1', title: 'Introduction to Theory of Computation', snippet: 'theory of computation automata formal languages grammar turing machine decidability complexity lecture university course', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=toc2', title: 'DFA and NFA Tutorial - Automata Theory', snippet: 'dfa nfa deterministic finite automaton nondeterministic automata theory tutorial conversion state diagram transition', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=toc3', title: 'Context Free Grammar Explained', snippet: 'context free grammar cfg pushdown automata derivation parse tree chomsky normal form formal languages lecture', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=toc4', title: 'DFD Data Flow Diagram Tutorial', snippet: 'dfd data flow diagram context diagram level process bubble external entity data store decomposition system analysis', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=toc5', title: 'Compiler Design - Lexical Analysis', snippet: 'compiler design lexical analysis tokenizer scanner regular expression finite automata syntax parser code generation', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=toc6', title: 'Turing Machine Explained Simply', snippet: 'turing machine computation halting problem decidability church turing thesis tape head state transition function', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=cs1', title: 'Computer Architecture Full Course', snippet: 'computer architecture cpu pipeline instruction set cache memory alu register addressing mode organization lecture', category: 'productive', contentType: 'video' },
+  { url: 'youtube.com/watch?v=cs2', title: 'Discrete Mathematics for Computer Science', snippet: 'discrete mathematics logic sets relations functions graph theory combinatorics proof induction recursion', category: 'productive', contentType: 'video' },
+
+  // ═══════════════════════════════════════
   //  DISTRACTION — Social Media
   // ═══════════════════════════════════════
   { url: 'instagram.com/explore', title: 'Instagram Explore', snippet: 'photos videos reels stories explore trending viral memes influencer lifestyle fashion selfie', category: 'distraction', contentType: 'mixed' },

@@ -5,6 +5,15 @@
 // 3. Focus indicator dot
 // 4. Message handling from background.js
 
+// ─── Re-injection guard ───
+// manifest.json injects this script automatically, AND background.js may
+// re-inject it via chrome.scripting.executeScript on existing tabs.
+// Prevent double-execution (const re-declaration would throw SyntaxError).
+if (window.__MF_CONTENT_LOADED) {
+  // Already loaded — skip
+} else {
+window.__MF_CONTENT_LOADED = true;
+
 // Note: Readability.js, extractor.js, and this file are loaded as content scripts
 // via manifest.json. overlay.js functions are loaded inline below since content
 // scripts share the same execution context.
@@ -535,3 +544,4 @@ if (window.location.hostname.includes('youtube.com')) {
   window.addEventListener('popstate', () => onSPANavigate());
 })();
 
+} // end of re-injection guard else block
