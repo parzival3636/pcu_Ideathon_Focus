@@ -28,6 +28,9 @@ const {
   getRoomMembers,
   updateMemberStatus,
   getUserActiveRoom,
+  // Tags
+  getTags,
+  createTag,
   getTagSessions,
   logTagSession,
   getTopGoal,
@@ -224,10 +227,27 @@ or
            return res.json({ classifications: tasks.map(t => ({ id: t.id, quadrant: 'schedule', reason: 'Fallback' }))});
         }
         
+        const taskLines = tasks.map(t => {
+          let entry = `- [${t.id}] ${t.title}`;
+          if (t.description) entry += ` | Description: ${t.description}`;
+          if (t.deadline) entry += ` | Deadline: ${t.deadline}`;
+          if (t.importance && t.importance !== 'unknown') entry += ` | Importance: ${t.importance}`;
+          return entry;
+        }).join('\n');
+
         const prompt = `You are a productivity AI organizing tasks into the Eisenhower Matrix.
 Categorize the following tasks into one of 4 quadrants: 'do_first' (Urgent & Important), 'schedule' (Not Urgent & Important), 'delegate' (Urgent & Not Important), 'eliminate' (Not Urgent & Not Important).
+
+Classification Guidelines:
+- Tasks with approaching deadlines (within 1-2 days) are URGENT.
+- Tasks with no deadline or far-off deadlines are NOT urgent.
+- Tasks marked as 'high' importance are IMPORTANT.
+- Tasks marked as 'low' importance are NOT important.
+- Use the description for additional context on what the task involves.
+- When unsure, default to 'schedule' (Important but Not Urgent).
+
 Tasks:
-${tasks.map(t => `- [${t.id}] ${t.title}`).join('\n')}
+${taskLines}
 
 Reply strictly with a JSON object in this exact format:
 {"classifications": [{"id": "task_id", "quadrant": "do_first", "reason": "why"}]}
@@ -750,9 +770,9 @@ Nothing else, just the JSON.`;
 
     app.post('/matrix', async (req, res) => {
       try {
-        const { title, quadrant, googleEventId } = req.body;
+        const { title, quadrant, googleEventId, description, deadline, importance } = req.body;
         if (!title) return res.status(400).json({ error: 'Title required' });
-        const result = await createMatrixTask(title, quadrant || 'inbox', googleEventId);
+        const result = await createMatrixTask(title, quadrant || 'inbox', googleEventId, description || null, deadline || null, importance || 'unknown');
         if (result.error) return res.status(500).json({ error: result.error });
         res.json({ ok: true, task: result.data });
       } catch (err) { res.status(500).json({ error: err.message }); }

@@ -825,54 +825,70 @@ async function createTag(name, color, targetMinutes, targetType) {
 async function getTags() {
   if (!supabase || !currentUserId) return [];
 
-  const { data, error } = await supabase
-    .from('tags')
-    .select('*')
-    .eq('user_id', currentUserId)
-    .order('created_at', { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from('tags')
+      .select('*')
+      .eq('user_id', currentUserId)
+      .order('created_at', { ascending: true });
 
-  if (error) {
-    console.error('[DB] getTags error:', error.message);
+    if (error) {
+      console.error('[DB] getTags error:', error.message);
+      return [];
+    }
+
+    if (!data || data.length === 0) return [];
+
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const updatedTags = [];
+
+    // Check for broken streaks and update
+    for (const tag of data) {
+      try {
+        let modified = false;
+        let newStreak = tag.current_streak || 0;
+
+        if (newStreak > 0 && isStreakBroken(tag.last_streak_date, tag.target_type, todayStr)) {
+          newStreak = 0;
+          modified = true;
+        }
+
+        if (modified) {
+          await supabase.from('tags').update({ current_streak: newStreak }).eq('id', tag.id);
+          tag.current_streak = newStreak;
+        }
+
+        // Fetch today's / this week's logged minutes
+        let rangeStart = todayStr;
+        if (tag.target_type === 'weekly') {
+          rangeStart = getStartOfWeek(todayStr);
+        }
+
+        try {
+          const { data: logs } = await supabase
+            .from('tag_sessions')
+            .select('minutes_logged')
+            .eq('tag_id', tag.id)
+            .gte('date', rangeStart);
+
+          tag.logged_minutes = (logs || []).reduce((sum, row) => sum + (row.minutes_logged || 0), 0);
+        } catch (logErr) {
+          console.warn('[DB] getTagSessions sub-query failed for tag', tag.id, ':', logErr.message);
+          tag.logged_minutes = 0;
+        }
+      } catch (tagErr) {
+        console.warn('[DB] Tag processing error for', tag.id, ':', tagErr.message);
+        tag.logged_minutes = 0;
+      }
+
+      updatedTags.push(tag);
+    }
+
+    return updatedTags;
+  } catch (err) {
+    console.error('[DB] getTags unexpected error:', err.message);
     return [];
   }
-
-  const todayStr = new Date().toISOString().slice(0, 10);
-  const updatedTags = [];
-
-  // Check for broken streaks and update
-  for (const tag of data || []) {
-    let modified = false;
-    let newStreak = tag.current_streak;
-
-    if (tag.current_streak > 0 && isStreakBroken(tag.last_streak_date, tag.target_type, todayStr)) {
-      newStreak = 0;
-      modified = true;
-    }
-
-    if (modified) {
-      await supabase.from('tags').update({ current_streak: newStreak }).eq('id', tag.id);
-      tag.current_streak = newStreak;
-    }
-
-    // Fetch today's / this week's logged minutes
-    let rangeStart = todayStr;
-    if (tag.target_type === 'weekly') {
-      rangeStart = getStartOfWeek(todayStr);
-    }
-
-    const { data: logs } = await supabase
-      .from('tag_sessions')
-      .select('minutes_logged')
-      .eq('tag_id', tag.id)
-      .gte('date', rangeStart);
-
-    const loggedMinutes = (logs || []).reduce((sum, row) => sum + (row.minutes_logged || 0), 0);
-    tag.logged_minutes = loggedMinutes;
-
-    updatedTags.push(tag);
-  }
-
-  return updatedTags;
 }
 
 /**
@@ -1112,11 +1128,15 @@ async function getMatrixTasks() {
   return data || [];
 }
 
-async function createMatrixTask(title, quadrant = 'inbox', googleEventId = null) {
+async function createMatrixTask(title, quadrant = 'inbox', googleEventId = null, description = null, deadline = null, importance = 'unknown') {
   if (!supabase || !currentUserId) return { error: 'DB not ready' };
-  const { data, error } = await supabase.from('eisenhower_tasks').insert({
+  const row = {
     user_id: currentUserId, title, quadrant, google_event_id: googleEventId
-  }).select().single();
+  };
+  if (description) row.description = description;
+  if (deadline) row.deadline = deadline;
+  if (importance && importance !== 'unknown') row.importance = importance;
+  const { data, error } = await supabase.from('eisenhower_tasks').insert(row).select().single();
   if (error) return { error: error.message };
   return { data };
 }

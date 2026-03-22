@@ -16,6 +16,7 @@ export default function TagsManager() {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sessionData, setSessionData] = useState({});
+  const [error, setError] = useState(null);
 
   // Form State
   const [name, setName] = useState('');
@@ -23,6 +24,8 @@ export default function TagsManager() {
   const [targetMinutes, setTargetMinutes] = useState(60);
   const [targetType, setTargetType] = useState('daily');
   const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState(null);
+  const [formSuccess, setFormSuccess] = useState(null);
 
   useEffect(() => {
     loadTags();
@@ -31,6 +34,7 @@ export default function TagsManager() {
   async function loadTags() {
     try {
       setLoading(true);
+      setError(null);
       const data = await tagsApi.getAll();
       setTags(data || []);
       
@@ -43,6 +47,7 @@ export default function TagsManager() {
       setSessionData(grids);
     } catch (err) {
       console.error(err);
+      setError(`Failed to load tags: ${err.message}. Check that your Supabase connection is working.`);
     } finally {
       setLoading(false);
     }
@@ -52,13 +57,18 @@ export default function TagsManager() {
     e.preventDefault();
     if (!name || targetMinutes <= 0) return;
     setSubmitting(true);
+    setFormError(null);
+    setFormSuccess(null);
     try {
       await tagsApi.create({ name, color, targetMinutes, targetType });
       setName('');
       setTargetMinutes(60);
+      setFormSuccess(`Tag "${name}" created!`);
+      setTimeout(() => setFormSuccess(null), 3000);
       await loadTags();
     } catch (err) {
       console.error(err);
+      setFormError(`Failed to create tag: ${err.message}`);
     } finally {
       setSubmitting(false);
     }
@@ -117,6 +127,17 @@ export default function TagsManager() {
         <h1 style={{ color: '#ffffff', fontSize: '36px', fontWeight: 700, letterSpacing: '-0.5px', margin: '0 0 8px 0' }}>Subject Tags</h1>
         <p style={{ color: '#6b7280', fontSize: '15px' }}>Track specific subjects, set goals, and build unbreakable streaks.</p>
       </div>
+
+      {/* Global error banner */}
+      {error && (
+        <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '12px', padding: '16px 20px', marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '18px' }}>⚠️</span>
+            <span style={{ color: '#fca5a5', fontSize: '14px' }}>{error}</span>
+          </div>
+          <button onClick={() => { setError(null); loadTags(); }} style={{ background: 'rgba(239,68,68,0.2)', border: '1px solid rgba(239,68,68,0.4)', borderRadius: '8px', padding: '6px 14px', color: '#fca5a5', fontSize: '13px', cursor: 'pointer' }}>Retry</button>
+        </div>
+      )}
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px', alignItems: 'flex-start' }}>
         
@@ -180,6 +201,17 @@ export default function TagsManager() {
             >
               {submitting ? 'Creating...' : 'Create Tag'}
             </button>
+
+            {formError && (
+              <div style={{ marginTop: '8px', padding: '10px 14px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '8px', color: '#fca5a5', fontSize: '13px' }}>
+                ⚠️ {formError}
+              </div>
+            )}
+            {formSuccess && (
+              <div style={{ marginTop: '8px', padding: '10px 14px', background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '8px', color: '#86efac', fontSize: '13px' }}>
+                ✓ {formSuccess}
+              </div>
+            )}
           </form>
         </div>
 

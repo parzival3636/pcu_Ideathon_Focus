@@ -83,8 +83,8 @@ export const tagsApi = {
 // ─── Eisenhower Matrix ───────────────────────────────────
 export const matrixApi = {
   getTasks: () => apiFetch('/matrix'),
-  createTask: (title, quadrant = 'inbox', googleEventId = null) =>
-    apiFetch('/matrix', { method: 'POST', body: JSON.stringify({ title, quadrant, googleEventId }) }),
+  createTask: (title, quadrant = 'inbox', googleEventId = null, description = null, deadline = null, importance = 'unknown') =>
+    apiFetch('/matrix', { method: 'POST', body: JSON.stringify({ title, quadrant, googleEventId, description, deadline, importance }) }),
   updateTask: (id, updates) =>
     apiFetch(`/matrix/${id}`, { method: 'PUT', body: JSON.stringify(updates) }),
   deleteTask: (id) =>

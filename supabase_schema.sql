@@ -143,6 +143,31 @@ CREATE INDEX IF NOT EXISTS idx_content_preferences_date ON content_preferences (
 CREATE INDEX IF NOT EXISTS idx_tag_sessions_date ON tag_sessions (date);
 CREATE INDEX IF NOT EXISTS idx_tag_sessions_tag_id ON tag_sessions (tag_id);
 
+-- Eisenhower Matrix Tasks
+CREATE TABLE IF NOT EXISTS eisenhower_tasks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES auth.users(id),
+  title TEXT NOT NULL,
+  description TEXT,
+  deadline TEXT,
+  importance TEXT DEFAULT 'unknown',
+  quadrant TEXT NOT NULL DEFAULT 'inbox',
+  completed BOOLEAN DEFAULT FALSE,
+  google_event_id TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_eisenhower_tasks_user ON eisenhower_tasks (user_id);
+CREATE INDEX IF NOT EXISTS idx_eisenhower_tasks_quadrant ON eisenhower_tasks (quadrant);
+
+ALTER TABLE eisenhower_tasks ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users can manage eisenhower_tasks" ON eisenhower_tasks FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+-- Migration: Add new columns to existing eisenhower_tasks table (safe to re-run)
+ALTER TABLE IF EXISTS eisenhower_tasks ADD COLUMN IF NOT EXISTS description TEXT;
+ALTER TABLE IF EXISTS eisenhower_tasks ADD COLUMN IF NOT EXISTS deadline TEXT;
+ALTER TABLE IF EXISTS eisenhower_tasks ADD COLUMN IF NOT EXISTS importance TEXT DEFAULT 'unknown';
+
 -- =============================================
 -- Row Level Security (RLS)
 -- Secure user data by ensuring users can only read/write their own records
