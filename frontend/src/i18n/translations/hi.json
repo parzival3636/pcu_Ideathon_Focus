@@ -1,6 +1,6 @@
 {
     "common": {
-        "velocity": "Velocity",
+        "velocity": "Mindforge",
         "signIn": "साइन इन",
         "signUp": "साइन अप",
         "signOut": "साइन आउट",
@@ -54,7 +54,7 @@
         "ctaTitle": "अपनी शिक्षा को गति देने के लिए तैयार हैं?",
         "ctaSubtitle": "हज़ारों छात्रों से जुड़ें जो स्मार्ट तरीके से सीख रहे हैं",
         "startLearning": "अभी सीखना शुरू करें",
-        "footer": "© 2024 Velocity. दुनिया भर में अनुकूली शिक्षार्थियों को सशक्त बनाना।"
+        "footer": "© 2024 Mindforge. दुनिया भर में अनुकूली शिक्षार्थियों को सशक्त बनाना।"
     },
     "signInPage": {
         "welcomeMessages": [
@@ -65,15 +65,15 @@
         "title": "साइन इन",
         "subtitle": "अपने व्यक्तिगत शिक्षण डैशबोर्ड तक पहुंचें",
         "signingIn": "साइन इन हो रहा है...",
-        "newToVelocity": "Velocity में नए हैं?",
+        "newToVelocity": "Mindforge में नए हैं?",
         "pleaseEnterEmail": "कृपया अपना ईमेल दर्ज करें",
         "pleaseEnterPassword": "कृपया अपना पासवर्ड दर्ज करें",
         "invalidCredentials": "अमान्य ईमेल या पासवर्ड"
     },
     "signUpPage": {
-        "joinVelocity": "Velocity में शामिल हों",
+        "joinVelocity": "Mindforge में शामिल हों",
         "createYourAccount": "अपना खाता बनाएं और सीखना शुरू करें",
-        "alreadyHaveAccount": "पहले से Velocity पर हैं?",
+        "alreadyHaveAccount": "पहले से Mindforge पर हैं?",
         "creatingAccount": "खाता बनाया जा रहा है...",
         "pleaseEnterName": "कृपया अपना नाम दर्ज करें",
         "pleaseEnterEmail": "कृपया अपना ईमेल दर्ज करें",

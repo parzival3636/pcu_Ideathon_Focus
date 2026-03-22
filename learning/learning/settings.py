@@ -105,7 +105,7 @@ LOGIN_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # CORS Configuration
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
@@ -132,7 +132,7 @@ CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_AGE = 86400 * 7
 SESSION_SAVE_EVERY_REQUEST = True
 
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', 'AIzaSyAkxVPAkd8j8FDjnEgtTsR2BeDr5PLR45U')
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 os.environ['GEMINI_API_KEY'] = GEMINI_API_KEY
 
 REST_FRAMEWORK = {

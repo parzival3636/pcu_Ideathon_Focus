@@ -9,8 +9,9 @@ from django.conf import settings
 from django.utils import timezone
 
 # Configure Gemini API
-GEMINI_API_KEY = getattr(settings, 'GEMINI_API_KEY', 'AIzaSyAkxVPAkd8j8FDjnEgtTsR2BeDr5PLR45U')
-genai.configure(api_key=GEMINI_API_KEY)
+GEMINI_API_KEY = getattr(settings, 'GEMINI_API_KEY', None)
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.5-flash")
 
 # Module-level variables for rate limiting and retry logic
@@ -24,8 +25,9 @@ def _reload_api_key():
     This allows dynamic API key updates without restarting the server.
     """
     global GEMINI_API_KEY, model
-    GEMINI_API_KEY = getattr(settings, 'GEMINI_API_KEY', 'AIzaSyDxej3XG1eQGjP4tLkRzNRSBnlV0OSMj3I')
-    genai.configure(api_key=GEMINI_API_KEY)
+    GEMINI_API_KEY = getattr(settings, 'GEMINI_API_KEY', None)
+    if GEMINI_API_KEY:
+        genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel("gemini-2.5-flash")
     print(f"[Gemini] API key reloaded from settings")
 

@@ -1,6 +1,6 @@
 {
     "common": {
-        "velocity": "Velocity",
+        "velocity": "Mindforge",
         "signIn": "సైన్ ఇన్",
         "signUp": "సైన్ అప్",
         "signOut": "సైన్ అవుట్",
@@ -65,15 +65,15 @@
         "title": "సైన్ ఇన్",
         "subtitle": "మీ వ్యక్తిగత అభ్యసన డాష్‌బోర్డ్‌ను యాక్సెస్ చేయండి",
         "signingIn": "సైన్ ఇన్ అవుతోంది...",
-        "newToVelocity": "Velocity కి కొత్తగా వచ్చారా?",
+        "newToVelocity": "Mindforge కి కొత్తగా వచ్చారా?",
         "pleaseEnterEmail": "దయచేసి మీ ఇమెయిల్ నమోదు చేయండి",
         "pleaseEnterPassword": "దయచేసి మీ పాస్‌వర్డ్ నమోదు చేయండి",
         "invalidCredentials": "చెల్లని ఇమెయిల్ లేదా పాస్‌వర్డ్"
     },
     "signUpPage": {
-        "joinVelocity": "Velocity లో చేరండి",
+        "joinVelocity": "Mindforge లో చేరండి",
         "createYourAccount": "మీ ఖాతాను సృష్టించి నేర్చుకోవడం ప్రారంభించండి",
-        "alreadyHaveAccount": "ఇప్పటికే Velocity లో ఉన్నారా?",
+        "alreadyHaveAccount": "ఇప్పటికే Mindforge లో ఉన్నారా?",
         "creatingAccount": "ఖాతా సృష్టించబడుతోంది...",
         "pleaseEnterName": "దయచేసి మీ పేరు నమోదు చేయండి",
         "pleaseEnterEmail": "దయచేసి మీ ఇమెయిల్ నమోదు చేయండి",

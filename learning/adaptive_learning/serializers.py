@@ -33,13 +33,33 @@ class ContentSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    user_answer = serializers.SerializerMethodField()
+
     class Meta:
         model = Question
         fields = [
             'id', 'question_text', 'question_type', 'options', 'correct_answer_index',
-            'correct_answer', 'explanation', 'difficulty', 'concept', 'order'
+            'correct_answer', 'explanation', 'difficulty', 'concept', 'order', 'user_answer'
         ]
         read_only_fields = ['id']
+
+    def get_user_answer(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user:
+            return None
+        
+        from .models import UserAnswer
+        answer = UserAnswer.objects.filter(question=obj, user=request.user).first()
+        if not answer:
+            return None
+            
+        return {
+            'selected_answer_index': answer.selected_answer_index,
+            'user_answer': answer.user_answer,
+            'is_correct': answer.is_correct,
+            'feedback': answer.feedback,
+            'score': answer.score
+        }
 
 
 class UserAnswerSerializer(serializers.ModelSerializer):

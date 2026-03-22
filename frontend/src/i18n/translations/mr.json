@@ -1,6 +1,6 @@
 {
     "common": {
-        "velocity": "Velocity",
+        "velocity": "Mindforge",
         "signIn": "साइन इन",
         "signUp": "साइन अप",
         "signOut": "साइन आउट",
@@ -65,15 +65,15 @@
         "title": "साइन इन",
         "subtitle": "तुमच्या वैयक्तिक शिक्षण डॅशबोर्डवर प्रवेश करा",
         "signingIn": "साइन इन होत आहे...",
-        "newToVelocity": "Velocity वर नवीन आहात?",
+        "newToVelocity": "Mindforge वर नवीन आहात?",
         "pleaseEnterEmail": "कृपया तुमचा ईमेल प्रविष्ट करा",
         "pleaseEnterPassword": "कृपया तुमचा पासवर्ड प्रविष्ट करा",
         "invalidCredentials": "अवैध ईमेल किंवा पासवर्ड"
     },
     "signUpPage": {
-        "joinVelocity": "Velocity मध्ये सामील व्हा",
+        "joinVelocity": "Mindforge मध्ये सामील व्हा",
         "createYourAccount": "तुमचे खाते तयार करा आणि शिकणे सुरू करा",
-        "alreadyHaveAccount": "आधीच Velocity वर आहात?",
+        "alreadyHaveAccount": "आधीच Mindforge वर आहात?",
         "creatingAccount": "खाते तयार होत आहे...",
         "pleaseEnterName": "कृपया तुमचे नाव प्रविष्ट करा",
         "pleaseEnterEmail": "कृपया तुमचा ईमेल प्रविष्ट करा",

@@ -401,7 +401,7 @@ export default function Dashboard() {
 
                       {testCompleted && (
                         <button
-                          onClick={() => navigate(`/assessment-results/${testStatus.assessment_id}`)}
+                          onClick={() => navigate(`/assessment/${testStatus.assessment_id}`)}
                           className="w-full py-2 bg-white/10 hover:bg-white/20 rounded-lg font-semibold transition-colors"
                         >
                           {t('dashboard.viewResults')}

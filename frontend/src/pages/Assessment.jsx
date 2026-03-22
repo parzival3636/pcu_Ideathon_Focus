@@ -17,6 +17,7 @@ export default function Assessment() {
   const [showResults, setShowResults] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [resultData, setResultData] = useState(null);
 
   // Proctoring state
   const [tabSwitchCount, setTabSwitchCount] = useState(0);
@@ -44,6 +45,21 @@ export default function Assessment() {
       setAssessment(response.data);
       const q = response.data.questions || [];
       setQuestions(q);
+      
+      // If completed, set results state
+      if (response.data.is_completed) {
+        const answers = {};
+        q.forEach((question, index) => {
+          if (question.user_answer) {
+            answers[index] = question.question_type === 'mcq' 
+              ? question.user_answer.selected_answer_index 
+              : question.user_answer.user_answer;
+          }
+        });
+        setSelectedAnswers(answers);
+        setShowResults(true);
+      }
+      
       if (q.length === 0) setError('No questions found in this assessment.');
     } catch (err) {
       setError(err.response?.data?.detail || err.message || 'Failed to load assessment.');
@@ -172,7 +188,8 @@ export default function Assessment() {
           await api.post(`/assessments/${assessmentId}/submit_answer/`, payload);
         }
       }
-      await api.post(`/assessments/${assessmentId}/complete/`);
+      const response = await api.post(`/assessments/${assessmentId}/complete/`);
+      setResultData(response.data);
       setShowResults(true);
     } catch (err) {
       console.error('Auto-submit failed:', err);
@@ -327,9 +344,24 @@ export default function Assessment() {
                 );
               })}
             </div>
-            <button onClick={() => navigate('/dashboard')} className="px-8 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-colors">
-              Back to Dashboard
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button 
+                onClick={() => navigate('/dashboard')} 
+                className="px-8 py-3 bg-white/10 hover:bg-white/15 rounded-lg font-semibold transition-colors"
+              >
+                Back to Dashboard
+              </button>
+              
+              {resultData?.test2_ready && (
+                <button 
+                  onClick={() => navigate(`/assessment/${resultData.test2_id}`)} 
+                  className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-lg font-semibold transition-all shadow-lg shadow-purple-500/20 flex items-center gap-2"
+                >
+                  <Zap className="w-4 h-4" fill="white" />
+                  Start Adaptive Test 2
+                </button>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>

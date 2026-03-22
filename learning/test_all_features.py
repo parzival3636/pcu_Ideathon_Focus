@@ -12,9 +12,9 @@ import sys
 import json
 import traceback
 
-# Set GEMINI_API_KEY from settings default (or override with env var)
+# Ensure GEMINI_API_KEY is available
 if not os.environ.get('GEMINI_API_KEY'):
-    os.environ['GEMINI_API_KEY'] = 'AIzaSyDxej3XG1eQGjP4tLkRzNRSBnlV0OSMj3I'
+    print("Warning: GEMINI_API_KEY environment variable not set. Tests requiring Gemini will fail.")
 
 # Add paths
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

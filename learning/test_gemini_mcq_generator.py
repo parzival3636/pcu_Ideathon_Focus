@@ -3,7 +3,13 @@ import json
 import re
 
 # ── Config ──────────────────────────────────────────────────────────────────
-GEMINI_API_KEY = "AIzaSyDxej3XG1eQGjP4tLkRzNRSBnlV0OSMj3I"
+import os
+from dotenv import load_dotenv
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    print("Error: GEMINI_API_KEY environment variable not set in .env or system.")
+    exit(1)
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.5-flash")
 

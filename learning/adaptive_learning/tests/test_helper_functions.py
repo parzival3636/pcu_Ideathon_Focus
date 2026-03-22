@@ -46,8 +46,8 @@ class TestReloadApiKey:
                 mock_settings.GEMINI_API_KEY = None
                 type(mock_settings).GEMINI_API_KEY = property(lambda self: None)
                 
-                # Mock getattr to return fallback
-                with patch('adaptive_learning.gemini_mcq_service.getattr', return_value='AIzaSyDxej3XG1eQGjP4tLkRzNRSBnlV0OSMj3I'):
+                # Mock getattr to return a dummy key
+                with patch('adaptive_learning.gemini_mcq_service.getattr', return_value='dummy_key_for_testing'):
                     gemini_mcq_service._reload_api_key()
                     
                     # Verify fallback key was used

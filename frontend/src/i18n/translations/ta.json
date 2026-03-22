@@ -1,6 +1,6 @@
 {
     "common": {
-        "velocity": "Velocity",
+        "velocity": "Mindforge",
         "signIn": "உள்நுழை",
         "signUp": "பதிவு செய்",
         "signOut": "வெளியேறு",
@@ -65,15 +65,15 @@
         "title": "உள்நுழை",
         "subtitle": "உங்கள் தனிப்பயனாக்கப்பட்ட கற்றல் டாஷ்போர்டை அணுகவும்",
         "signingIn": "உள்நுழைகிறது...",
-        "newToVelocity": "Velocity-க்கு புதியவரா?",
+        "newToVelocity": "Mindforge-க்கு புதியவரா?",
         "pleaseEnterEmail": "உங்கள் மின்னஞ்சலை உள்ளிடவும்",
         "pleaseEnterPassword": "உங்கள் கடவுச்சொல்லை உள்ளிடவும்",
         "invalidCredentials": "தவறான மின்னஞ்சல் அல்லது கடவுச்சொல்"
     },
     "signUpPage": {
-        "joinVelocity": "Velocity-இல் சேருங்கள்",
+        "joinVelocity": "Mindforge-இல் சேருங்கள்",
         "createYourAccount": "உங்கள் கணக்கை உருவாக்கி கற்கத் தொடங்குங்கள்",
-        "alreadyHaveAccount": "ஏற்கனவே Velocity-இல் உள்ளீர்களா?",
+        "alreadyHaveAccount": "ஏற்கனவே Mindforge-இல் உள்ளீர்களா?",
         "creatingAccount": "கணக்கு உருவாக்கப்படுகிறது...",
         "pleaseEnterName": "உங்கள் பெயரை உள்ளிடவும்",
         "pleaseEnterEmail": "உங்கள் மின்னஞ்சலை உள்ளிடவும்",

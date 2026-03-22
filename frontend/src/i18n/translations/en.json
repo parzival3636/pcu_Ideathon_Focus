@@ -1,6 +1,6 @@
 {
     "common": {
-        "velocity": "Velocity",
+        "velocity": "Mindforge",
         "signIn": "Sign In",
         "signUp": "Sign Up",
         "signOut": "Sign Out",
@@ -30,7 +30,7 @@
     "landing": {
         "aiPowered": "AI-Powered Adaptive Learning",
         "heroTitle1": "Learn at Your",
-        "heroTitle2": "Own Velocity",
+        "heroTitle2": "Own Mindforge",
         "heroDescription": "Experience the future of learning with AI that adapts to your pace.",
         "heroHighlight": "Master any topic",
         "heroDescription2": "with personalized difficulty and intelligent insights.",
@@ -50,11 +50,11 @@
         "step2Title": "Take Assessments",
         "step2Desc": "Answer AI-generated questions tailored to your content. Get instant feedback and explanations.",
         "step3Title": "Adapt & Master",
-        "step3Desc": "Watch as the system adjusts difficulty and tracks your progress. Master topics at your own velocity.",
+        "step3Desc": "Watch as the system adjusts difficulty and tracks your progress. Master topics at your own mindforge.",
         "ctaTitle": "Ready to accelerate your learning?",
         "ctaSubtitle": "Join thousands of students who are learning smarter, not harder",
         "startLearning": "Start Learning Now",
-        "footer": "© 2024 Velocity. Empowering adaptive learners worldwide."
+        "footer": "© 2024 Mindforge. Empowering adaptive learners worldwide."
     },
     "signInPage": {
         "welcomeMessages": [
@@ -65,15 +65,15 @@
         "title": "Sign In",
         "subtitle": "Access your personalized learning dashboard",
         "signingIn": "Signing in...",
-        "newToVelocity": "New to Velocity?",
+        "newToVelocity": "New to Mindforge?",
         "pleaseEnterEmail": "Please enter your email",
         "pleaseEnterPassword": "Please enter your password",
         "invalidCredentials": "Invalid email or password"
     },
     "signUpPage": {
-        "joinVelocity": "Join Velocity",
+        "joinVelocity": "Join Mindforge",
         "createYourAccount": "Create your account and start learning",
-        "alreadyHaveAccount": "Already have Velocity?",
+        "alreadyHaveAccount": "Already have Mindforge?",
         "creatingAccount": "Creating Account...",
         "pleaseEnterName": "Please enter your name",
         "pleaseEnterEmail": "Please enter your email",

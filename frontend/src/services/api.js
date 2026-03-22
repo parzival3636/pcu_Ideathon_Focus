@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // Dynamically determine backend host (ensures cookies work for both localhost and 127.0.0.1)
 const baseHost = window.location.hostname || '127.0.0.1';
-const baseURL = `http://${baseHost}:8000`;
+const baseURL = `http://${baseHost}:8001`;
 
 // Create axios instance with base configuration
 const api = axios.create({
